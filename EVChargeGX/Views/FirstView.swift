@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import MapKit
 struct FirstView: View {
     
     // variables stored in Appstorage
@@ -18,7 +18,6 @@ struct FirstView: View {
     @AppStorage("chademo") var chademo = false
     @AppStorage("firstTimeOpen") var firstTimeOpen = true
     @State private var alert = false
-    
     var body: some View {
         NavigationView{
             ZStack {
