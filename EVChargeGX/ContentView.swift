@@ -2,77 +2,88 @@
 //  ContentView.swift
 //  EVChargeGX
 //
-//  Created by iosdev on 16.4.2023.
+//  Created by iosdev on 3.4.2023.
 //
-
 import SwiftUI
 import CoreData
+import Drawer
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+    @State private var isShowingStations = false
+    @State var heights = [CGFloat(110),CGFloat(750)]
+ //   @State var station = Base(AddressInfo: Info)
+    
+    
+    var body: some View{
+        
+            ZStack{
+                    MapView()
+                
+                Drawer(heights: $heights) {
+                    ZStack{
+                        Color(uiColor: UIColor.secondarySystemBackground)
+                        VStack{
+                            RoundedRectangle(cornerRadius: 20).frame(width: 60, height: 5, alignment: .center)
+                                .background(Color.white)
+                                .padding(10)
+                            StationsListView()
+                            Spacer()
+                        }
+                    }
+                }.edgesIgnoringSafeArea(.vertical)
+            }
+            
+                .toolbar{
+                    NavigationLink(destination: ProfileView(), label: {
+                        Text("Profile")
+                    }).simultaneousGesture(TapGesture().onEnded{
+                   //     print("hmomo petteri\($station)")
+               
+                    })
+                }
+        }
+    }
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
 
+
+
+struct SettingsView: View {
+    
+    var color: Color
+    
+    var body: some View{
+        CircleNumberView(color: color, number: 1)
+            .navigationTitle("Settings")
+            Text("Test")
+                .toolbar{
+                    Button("test"){
+                    }
+                    
+                }
+    }
+}
+
+struct CircleNumberView: View{
+    
+    var color: Color
+    var number: Int
+
+
+    
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
-        }
-    }
+        ZStack{
+            Circle()
+                .frame(width: 200, height: 200)
+                .foregroundColor(color)
+            Text("\(number)")
+                .foregroundColor(.white)
+                .font(.system(size: 70, weight: .bold))
+            
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
         }
     }
 }
+
 
 private let itemFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -80,9 +91,3 @@ private let itemFormatter: DateFormatter = {
     formatter.timeStyle = .medium
     return formatter
 }()
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
-}

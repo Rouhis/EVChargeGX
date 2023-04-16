@@ -16,6 +16,18 @@
 		6A2F07CA29EC68ED00E2313A /* EVChargeGXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07C929EC68ED00E2313A /* EVChargeGXTests.swift */; };
 		6A2F07D429EC68ED00E2313A /* EVChargeGXUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07D329EC68ED00E2313A /* EVChargeGXUITests.swift */; };
 		6A2F07D629EC68ED00E2313A /* EVChargeGXUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07D529EC68ED00E2313A /* EVChargeGXUITestsLaunchTests.swift */; };
+		6A2F07E729EC697E00E2313A /* DrawerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07E629EC697E00E2313A /* DrawerItem.swift */; };
+		6A2F07E929EC69A900E2313A /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07E829EC69A900E2313A /* ApiModel.swift */; };
+		6A2F07EB29EC69BF00E2313A /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07EA29EC69BF00E2313A /* Api.swift */; };
+		6A2F07ED29EC69D800E2313A /* CarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07EC29EC69D800E2313A /* CarModel.swift */; };
+		6A2F07EF29EC69FD00E2313A /* StationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07EE29EC69FD00E2313A /* StationData.swift */; };
+		6A2F07F129EC6A2200E2313A /* StationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07F029EC6A2200E2313A /* StationViewModel.swift */; };
+		6A2F07F329EC6A6700E2313A /* DrawerContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07F229EC6A6700E2313A /* DrawerContentView.swift */; };
+		6A2F07F529EC6A8F00E2313A /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07F429EC6A8F00E2313A /* FirstView.swift */; };
+		6A2F07F729EC6AAA00E2313A /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07F629EC6AAA00E2313A /* MapView.swift */; };
+		6A2F07F929EC6AD600E2313A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07F829EC6AD600E2313A /* ProfileView.swift */; };
+		6A2F07FC29EC6B2200E2313A /* Drawer in Frameworks */ = {isa = PBXBuildFile; productRef = 6A2F07FB29EC6B2200E2313A /* Drawer */; };
+		6A2F07FE29EC6E2C00E2313A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6A2F07FD29EC6E2C00E2313A /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +61,17 @@
 		6A2F07CF29EC68ED00E2313A /* EVChargeGXUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EVChargeGXUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A2F07D329EC68ED00E2313A /* EVChargeGXUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVChargeGXUITests.swift; sourceTree = "<group>"; };
 		6A2F07D529EC68ED00E2313A /* EVChargeGXUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVChargeGXUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6A2F07E629EC697E00E2313A /* DrawerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerItem.swift; sourceTree = "<group>"; };
+		6A2F07E829EC69A900E2313A /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
+		6A2F07EA29EC69BF00E2313A /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
+		6A2F07EC29EC69D800E2313A /* CarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarModel.swift; sourceTree = "<group>"; };
+		6A2F07EE29EC69FD00E2313A /* StationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationData.swift; sourceTree = "<group>"; };
+		6A2F07F029EC6A2200E2313A /* StationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationViewModel.swift; sourceTree = "<group>"; };
+		6A2F07F229EC6A6700E2313A /* DrawerContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerContentView.swift; sourceTree = "<group>"; };
+		6A2F07F429EC6A8F00E2313A /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
+		6A2F07F629EC6AAA00E2313A /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		6A2F07F829EC6AD600E2313A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		6A2F07FD29EC6E2C00E2313A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A2F07FC29EC6B2200E2313A /* Drawer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +103,7 @@
 		6A2F07A629EC68EA00E2313A = {
 			isa = PBXGroup;
 			children = (
+				6A2F07FD29EC6E2C00E2313A /* .gitignore */,
 				6A2F07B129EC68EA00E2313A /* EVChargeGX */,
 				6A2F07C829EC68ED00E2313A /* EVChargeGXTests */,
 				6A2F07D229EC68ED00E2313A /* EVChargeGXUITests */,
@@ -99,6 +124,10 @@
 		6A2F07B129EC68EA00E2313A /* EVChargeGX */ = {
 			isa = PBXGroup;
 			children = (
+				6A2F07E529EC694D00E2313A /* Networking */,
+				6A2F07E429EC694500E2313A /* Models */,
+				6A2F07E329EC693400E2313A /* Components */,
+				6A2F07E229EC692000E2313A /* Views */,
 				6A2F07B229EC68EA00E2313A /* EVChargeGXApp.swift */,
 				6A2F07B429EC68EA00E2313A /* ContentView.swift */,
 				6A2F07B629EC68ED00E2313A /* Assets.xcassets */,
@@ -135,6 +164,44 @@
 			path = EVChargeGXUITests;
 			sourceTree = "<group>";
 		};
+		6A2F07E229EC692000E2313A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6A2F07F229EC6A6700E2313A /* DrawerContentView.swift */,
+				6A2F07F429EC6A8F00E2313A /* FirstView.swift */,
+				6A2F07F629EC6AAA00E2313A /* MapView.swift */,
+				6A2F07F829EC6AD600E2313A /* ProfileView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6A2F07E329EC693400E2313A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				6A2F07E629EC697E00E2313A /* DrawerItem.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		6A2F07E429EC694500E2313A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6A2F07E829EC69A900E2313A /* ApiModel.swift */,
+				6A2F07EC29EC69D800E2313A /* CarModel.swift */,
+				6A2F07EE29EC69FD00E2313A /* StationData.swift */,
+				6A2F07F029EC6A2200E2313A /* StationViewModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6A2F07E529EC694D00E2313A /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				6A2F07EA29EC69BF00E2313A /* Api.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -151,6 +218,9 @@
 			dependencies = (
 			);
 			name = EVChargeGX;
+			packageProductDependencies = (
+				6A2F07FB29EC6B2200E2313A /* Drawer */,
+			);
 			productName = EVChargeGX;
 			productReference = 6A2F07AF29EC68EA00E2313A /* EVChargeGX.app */;
 			productType = "com.apple.product-type.application";
@@ -223,6 +293,9 @@
 				Base,
 			);
 			mainGroup = 6A2F07A629EC68EA00E2313A;
+			packageReferences = (
+				6A2F07FA29EC6B2200E2313A /* XCRemoteSwiftPackageReference "swiftui-drawer" */,
+			);
 			productRefGroup = 6A2F07B029EC68EA00E2313A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -240,6 +313,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A2F07BA29EC68ED00E2313A /* Preview Assets.xcassets in Resources */,
+				6A2F07FE29EC6E2C00E2313A /* .gitignore in Resources */,
 				6A2F07B729EC68ED00E2313A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,10 +339,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A2F07ED29EC69D800E2313A /* CarModel.swift in Sources */,
+				6A2F07F529EC6A8F00E2313A /* FirstView.swift in Sources */,
 				6A2F07BC29EC68ED00E2313A /* Persistence.swift in Sources */,
 				6A2F07B529EC68EA00E2313A /* ContentView.swift in Sources */,
+				6A2F07F729EC6AAA00E2313A /* MapView.swift in Sources */,
+				6A2F07E729EC697E00E2313A /* DrawerItem.swift in Sources */,
+				6A2F07EF29EC69FD00E2313A /* StationData.swift in Sources */,
+				6A2F07F129EC6A2200E2313A /* StationViewModel.swift in Sources */,
 				6A2F07B329EC68EA00E2313A /* EVChargeGXApp.swift in Sources */,
+				6A2F07E929EC69A900E2313A /* ApiModel.swift in Sources */,
+				6A2F07EB29EC69BF00E2313A /* Api.swift in Sources */,
 				6A2F07BF29EC68ED00E2313A /* EVChargeGX.xcdatamodeld in Sources */,
+				6A2F07F929EC6AD600E2313A /* ProfileView.swift in Sources */,
+				6A2F07F329EC6A6700E2313A /* DrawerContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +513,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"EVChargeGX/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = Miau;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -457,6 +542,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"EVChargeGX/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = Miau;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -587,6 +673,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6A2F07FA29EC6B2200E2313A /* XCRemoteSwiftPackageReference "swiftui-drawer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maustinstar/swiftui-drawer";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6A2F07FB29EC6B2200E2313A /* Drawer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6A2F07FA29EC6B2200E2313A /* XCRemoteSwiftPackageReference "swiftui-drawer" */;
+			productName = Drawer;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		6A2F07BD29EC68ED00E2313A /* EVChargeGX.xcdatamodeld */ = {

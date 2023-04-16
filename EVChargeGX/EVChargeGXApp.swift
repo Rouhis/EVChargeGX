@@ -2,9 +2,8 @@
 //  EVChargeGXApp.swift
 //  EVChargeGX
 //
-//  Created by iosdev on 16.4.2023.
+//  Created by iosdev on 3.4.2023.
 //
-
 import SwiftUI
 
 @main
@@ -13,7 +12,7 @@ struct EVChargeGXApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FirstView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
