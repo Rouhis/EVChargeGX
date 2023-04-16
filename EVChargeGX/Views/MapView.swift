@@ -52,7 +52,7 @@ struct MapView: View {
 
             .edgesIgnoringSafeArea(.all)
             .onAppear {
-                locationManager.requestWhenInUseAuthorization()
+                
                 locationManager.desiredAccuracy = kCLLocationAccuracyBest
                 locationManager.distanceFilter = kCLDistanceFilterNone
                 locationManager.startUpdatingLocation()
