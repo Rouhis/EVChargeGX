@@ -9,15 +9,18 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @State private var type2 = UserDefaults.standard.bool(forKey: "type2")
-    @State private var ccs = UserDefaults.standard.bool(forKey: "ccs")
-    @State private var chademo = UserDefaults.standard.bool(forKey: "chademo")
+    @AppStorage("type2") var type2 = UserDefaults.standard.bool(forKey: "type2")
+    @AppStorage("ccs") var ccs = UserDefaults.standard.bool(forKey: "ccs")
+    @AppStorage("chademo") var chademo = UserDefaults.standard.bool(forKey: "chademo")
     @State private var firstManufacturer = UserDefaults.standard.string(forKey: "manufacturer")
     @State private var firstModel = UserDefaults.standard.string(forKey: "model")
     @State private var firstCapacity = UserDefaults.standard.string(forKey: "capacity")
+    @State private var manufacturer = ""
+    @State private var manufacturerTitle = "No cars"
+    @State private var model = ""
+    @State private var capacity = ""
     @State private var alert = false
     @State private var cars: [Car] = []
-    @State private var manufacForPicker = "No cars"
     
     var body: some View {
         let car1 = Car(manufacturer: firstManufacturer, model: firstModel, batteryCapacity: firstCapacity)
@@ -31,19 +34,27 @@ struct ProfileView: View {
                         .padding(.bottom, -15.0)
                 }.onAppear {
                     self.cars.append(car1)
-                    manufacForPicker = car1.manufacturer ?? "No cars"
+                    manufacturer = firstManufacturer ?? ""
+                    model = firstModel ?? ""
+                    capacity = firstCapacity ?? ""
+                    manufacturerTitle = firstManufacturer ?? "No cars"
                 }
                 List {
                     VStack() {
                         Menu {
                             ForEach(cars) { car in
-                                Button("\(car.manufacturer ?? "")", action: {manufacForPicker = car.manufacturer ?? "No cars"})
+                                Button("\(car.manufacturer ?? "")", action: {
+                                    manufacturerTitle = car.manufacturer ?? "No cars"
+                                    manufacturer = car.manufacturer ?? ""
+                                    model = car.model ?? ""
+                                    capacity = car.batteryCapacity ?? ""
+                                })
                             }
                         } label: {
                             HStack {
                                 Text("Selected car: ")
                                     .foregroundColor(.black)
-                                    Text("\(manufacForPicker)")
+                                    Text("\(manufacturerTitle)")
                                 Image(systemName: "arrow.down.app")
                             }
                         }
@@ -56,11 +67,11 @@ struct ProfileView: View {
                         .pickerStyle(MenuPickerStyle())*/
                         
                         VStack(alignment: .leading) {
-                            Text("Manufacturer: \(car1.manufacturer ?? "")")
+                            Text("Manufacturer: \(manufacturer)")
                                 .padding(.bottom, 5)
-                            Text("Model: \(car1.model ?? "")")
+                            Text("Model: \(model)")
                                 .padding(.bottom, 5)
-                            Text("Battery capacity(kWh): \(car1.batteryCapacity ?? "")")
+                            Text("Battery capacity(kWh): \(capacity)")
                         }
                         .padding()
                     }
@@ -81,7 +92,7 @@ struct ProfileView: View {
                         }
                         .buttonStyle(BorderlessButtonStyle())
                         VStack {
-                            Toggle("Type 2",isOn: $type2)
+                            Toggle("Type 2", isOn: $type2)
                             Toggle("CCS", isOn: $ccs)
                             Toggle("CHAdeMO", isOn: $chademo)
                         }
