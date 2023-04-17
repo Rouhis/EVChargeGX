@@ -172,8 +172,8 @@
 				6A2F07F229EC6A6700E2313A /* DrawerContentView.swift */,
 				6A2F07F429EC6A8F00E2313A /* FirstView.swift */,
 				6A2F07F629EC6AAA00E2313A /* MapView.swift */,
-				6A2F07F829EC6AD600E2313A /* ProfileView.swift */,
 				6AB0F4A929EC98340032C6CD /* PopUpView.swift */,
+				6A2F07F829EC6AD600E2313A /* ProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

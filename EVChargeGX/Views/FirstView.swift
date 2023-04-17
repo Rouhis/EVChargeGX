@@ -83,7 +83,7 @@ struct FirstView: View {
                             firstTimeOpen = false
                         })
                         HStack {
-                            NavigationLink(destination: ProfileView(), label:{                            Text("I will do this later")
+                            NavigationLink(destination: ContentView(), label:{                            Text("I will do this later")
                                     .foregroundColor(.black)
                                     .underline()
                                     .italic()
