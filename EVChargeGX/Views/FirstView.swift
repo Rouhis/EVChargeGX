@@ -17,7 +17,7 @@ struct FirstView: View {
     @AppStorage("type2") var type2 = false
     @AppStorage("ccs") var ccs = false
     @AppStorage("chademo") var chademo = false
-    @AppStorage("firstTimeOpen") var firstTimeOpen = true
+    @AppStorage("firstTimeOpen") var firstTimeOpen = UserDefaults.standard.bool(forKey: "firstTimeOpen")
     @State private var alert = false
     var body: some View {
         NavigationView{

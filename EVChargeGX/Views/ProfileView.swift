@@ -9,17 +9,23 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    // Variables from UserDefaults
     @AppStorage("type2") var type2 = UserDefaults.standard.bool(forKey: "type2")
     @AppStorage("ccs") var ccs = UserDefaults.standard.bool(forKey: "ccs")
     @AppStorage("chademo") var chademo = UserDefaults.standard.bool(forKey: "chademo")
     @State private var firstManufacturer = UserDefaults.standard.string(forKey: "manufacturer")
     @State private var firstModel = UserDefaults.standard.string(forKey: "model")
     @State private var firstCapacity = UserDefaults.standard.string(forKey: "capacity")
+    // Other variables
     @State private var manufacturer = ""
     @State private var manufacturerTitle = "No cars"
     @State private var model = ""
     @State private var capacity = ""
+    @State private var addManufacturer = ""
+    @State private var addModel = ""
+    @State private var addCapacity = ""
     @State private var alert = false
+    @State private var alertAddCar = false
     @State private var cars: [Car] = []
     
     var body: some View {
@@ -33,6 +39,7 @@ struct ProfileView: View {
                         .font(.system(size: 36, design: .default))
                         .padding(.bottom, -15.0)
                 }.onAppear {
+                    // Adds the first car's data to an Array and updates the text fields on profile page with the first car's data
                     self.cars.append(car1)
                     manufacturer = firstManufacturer ?? ""
                     model = firstModel ?? ""
@@ -42,8 +49,10 @@ struct ProfileView: View {
                 List {
                     VStack() {
                         Menu {
+                            // Goes through the Car objects in the cars array and adds the objects to a picker
                             ForEach(cars) { car in
                                 Button("\(car.manufacturer ?? "")", action: {
+                                    // Adds the selected Car object's data to the variables that are used to show the selected car's data
                                     manufacturerTitle = car.manufacturer ?? "No cars"
                                     manufacturer = car.manufacturer ?? ""
                                     model = car.model ?? ""
@@ -54,17 +63,10 @@ struct ProfileView: View {
                             HStack {
                                 Text("Selected car: ")
                                     .foregroundColor(.black)
-                                    Text("\(manufacturerTitle)")
+                                Text("\(manufacturerTitle)")
                                 Image(systemName: "arrow.down.app")
                             }
                         }
-                        /*Picker("Choose a car", selection: $test)
-                        {
-                            ForEach(cars) { car in
-                                Text(car.manufacturer ?? "")
-                            }
-                        }
-                        .pickerStyle(MenuPickerStyle())*/
                         
                         VStack(alignment: .leading) {
                             Text("Manufacturer: \(manufacturer)")
@@ -82,7 +84,10 @@ struct ProfileView: View {
                     VStack {
                         HStack {
                             Text("Owned connectors")
-                            Button(action: {                                alert = true}) {
+                            // Info buble that shows extra information about the connectors when tapped
+                            Button(action: {
+                                alert = true
+                            }) {
                                 Image(systemName: "info.circle")
                             }.alert(isPresented: $alert) {
                                 Alert(
@@ -90,7 +95,9 @@ struct ProfileView: View {
                                 )
                             }
                         }
+                        // Stops the button from being interacted in the whole HStack
                         .buttonStyle(BorderlessButtonStyle())
+                        // Toggle buttons for connectors. Values stored in UserDefaults
                         VStack {
                             Toggle("Type 2", isOn: $type2)
                             Toggle("CCS", isOn: $ccs)
@@ -98,12 +105,34 @@ struct ProfileView: View {
                         }
                         .padding()
                         VStack {
-                            Button(action: {print(cars)}) {
+                            // Button for adding a new Car object with the user's given values and adds it to the dropdown menu as selected and car information
+                            Button(action: {
+                                print("Owned cars:", cars.count)
+                                alertAddCar = true
+                                addManufacturer = ""
+                                addModel = ""
+                                addCapacity = ""
+                            }) {
                                 HStack {
                                     Text("Add a new car")
                                         .foregroundColor(.black)
-                                    Image(systemName: "plus.circle")
                                 }
+                            }.alert("Add a new car", isPresented: $alertAddCar) {
+                                TextField("Manufacturer", text: $addManufacturer)
+                                TextField("Model", text: $addModel)
+                                TextField("Battery capacity(kWh)", text: $addCapacity)
+                                
+                                Button("Cancel", action: {})
+                                Button("Save", action: {
+                                    // Creates a new Car object, adds it to the cars array
+                                    let newCar = Car(manufacturer: addManufacturer, model: addModel, batteryCapacity: addCapacity)
+                                    cars.append(newCar)
+                                    // Updates the selected car's information and adds the new car to the dropdown menu as selected
+                                    manufacturerTitle = addManufacturer
+                                    manufacturer = addManufacturer
+                                    model = addModel
+                                    capacity = addCapacity
+                                })
                             }
                             .frame(width: 175, height: 50)
                             .background(.green)
