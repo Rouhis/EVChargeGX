@@ -4,12 +4,14 @@
 //
 //  Created by iosdev on 15.4.2023.
 //
+
 import Foundation
 
  class stationViewModel: ObservableObject {
-    @Published var stations: [StationData] = StationData.samplesStations
+    @Published var stations = [StationData]()
     @Published var fetching = false
     
+     @MainActor
     func fetchData() async {
         fetching = true
         
@@ -26,7 +28,7 @@ import Foundation
             }
             
         }
-        stations = StationData.samplesStations
+        
         
         fetching = false
     }

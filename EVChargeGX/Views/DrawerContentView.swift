@@ -8,10 +8,7 @@ import SwiftUI
 
 
 extension StationData {
-    public static var samplesStations = [
-        StationData(name: "test1", address: "test2", latitude: 0.0, longitude: 0.0),
-        StationData(name: "test3", address: "test4",latitude: 0.0, longitude: 0.0)
-    ]
+
 }
 
 
@@ -34,3 +31,5 @@ struct StationsListView: View {
         }
     }
 }
+
+

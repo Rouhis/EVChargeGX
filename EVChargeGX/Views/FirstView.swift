@@ -108,11 +108,11 @@ struct FirstView: View {
                 }.onAppear {
                     locationManager.requestWhenInUseAuthorization()
                 }
-
+                
             }
         }
-    }}
-
+    }
+}
 struct FirstView_Previews: PreviewProvider {
     static var previews: some View {
         FirstView()
