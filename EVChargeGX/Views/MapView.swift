@@ -22,56 +22,56 @@ struct MapView: View {
     
     var body: some View {
         ZStack {
-                Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: annotationItems) { annotation in
-                    MapAnnotation(coordinate: annotation.coordinate) {
-                        VStack {
-                            Image(systemName: "bolt.fill")
-                                .resizable()
-                                .foregroundColor(.white)
-                                .frame(width: 20, height: 30)
-                                .background(
-                                    Circle()
-                                        .fill(Color.blue)
-                                        .frame(width: 30, height: 30)
-                                )
-                            Circle()
-                                .fill(Color.red)
-                                .frame(width: 8, height: 8)
-                        }
-                        .frame(width: 60, height: 60)
-                        .cornerRadius(10)
-                        .shadow(radius: 3)
-                        .onTapGesture {
-                            print(annotation.title)
-                        }
-                        
+            Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: annotationItems.prefix(10)) { annotation in
+                MapAnnotation(coordinate: annotation.coordinate) {
+                    VStack {
+                        Image(systemName: "bolt.fill")
+                            .resizable()
+                            .foregroundColor(.white)
+                            .frame(width: 20, height: 30)
+                            .background(
+                                Circle()
+                                    .fill(Color.blue)
+                                    .frame(width: 30, height: 30)
+                            )
+                        Circle()
+                            .fill(Color.red)
+                            .frame(width: 8, height: 8)
+                    }
+                    .frame(width: 60, height: 60)
+                    .cornerRadius(10)
+                    .shadow(radius: 3)
+                    .onTapGesture {
+                        print(annotation.title)
+                    }
+                    .onDisappear {
+                        annotationItems.removeAll()
                     }
                 }
-            
-            
+            }
         }
-
-            .edgesIgnoringSafeArea(.all)
-            .onAppear {
+        .edgesIgnoringSafeArea(.all)
+        .onAppear {
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.distanceFilter = kCLDistanceFilterNone
+            locationManager.startUpdatingLocation()
+            if let userLocation = locationManager.location?.coordinate {
+                region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
                 
-                locationManager.desiredAccuracy = kCLLocationAccuracyBest
-                locationManager.distanceFilter = kCLDistanceFilterNone
-                locationManager.startUpdatingLocation()
-                if let userLocation = locationManager.location?.coordinate {
-                    region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-                    
-                    callApi(latitude: userLocation.latitude, longitude: userLocation.longitude) { result, error in
-                        if let error = error {
-                            print("Error decoding JSON: \(error)")
-                        } else if let result = result {
-                            // Do something with the array of objects here
-                            for item in result {
-                                let annotationItem = AnnotationItem(
-                                    coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
-                                    title: item.AddressInfo.Title
-                                )
-                                annotationItems.append(annotationItem)
-                                print(item.AddressInfo.Title)
+                callApi(latitude: userLocation.latitude, longitude: userLocation.longitude) { result, error in
+                    if let error = error {
+                        print("Error decoding JSON: \(error)")
+                    } else if let result = result {
+                        // Do something with the array of objects here
+                        for (index, item) in result.enumerated() {
+                            let annotationItem = AnnotationItem(
+                                coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
+                                title: item.AddressInfo.Title
+                            )
+                            annotationItems.append(annotationItem)
+                            print(item.AddressInfo.Title)
+                            if index == 9 {
+                                break
                             }
                         }
                     }
@@ -79,6 +79,7 @@ struct MapView: View {
             }
         }
     }
+}
     struct MapView_Previews: PreviewProvider {
         static var previews: some View {
             MapView()
