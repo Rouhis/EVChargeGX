@@ -17,6 +17,7 @@ struct ContentView: View {
     var body: some View{
         
             ZStack{
+                    
                     MapView()
                 
                 Drawer(heights: $heights) {
@@ -37,7 +38,7 @@ struct ContentView: View {
                     NavigationLink(destination: ProfileView(), label: {
                         Text("Profile")
                     }).simultaneousGesture(TapGesture().onEnded{
-                   //     print("hmomo petteri\($station)")
+                   
                
                     })
                 }
@@ -59,7 +60,7 @@ struct SettingsView: View {
                     Button("test"){
                     }
                     
-                }
+                }.padding()
     }
 }
 
@@ -91,3 +92,10 @@ private let itemFormatter: DateFormatter = {
     formatter.timeStyle = .medium
     return formatter
 }()
+
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}

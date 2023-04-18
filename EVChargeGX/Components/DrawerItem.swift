@@ -7,22 +7,26 @@ import SwiftUI
 
 struct drawerItem: View {
     
-   @State var stationName: String
-   @State var stationAddress: String
+    @State var stationName: String
+    @State var stationAddress: String
     
     
     var body: some View {
-        HStack{
-            Circle()
-                .frame(width: 50, height: 50)
-                .foregroundColor(Color.white)
-                .padding(.leading, 25)
-                .padding(.trailing, 15)
-            VStack{
-                Text("\(String(stationName))")
-                Text("\(String(stationAddress))")
+        NavigationLink(destination: PopUpView(stationName: stationName, stationAddress: stationAddress), label: {
+            HStack {
+                Circle()
+                    .frame(width: 50, height: 50)
+                    .foregroundColor(Color.white)
+                    .padding(.leading, 25)
+                    .padding(.trailing, 15)
+                VStack {
+                    Text("\(String(stationName))")
+                    Text("\(String(stationAddress))")
+                }
+                Spacer()
             }
-            Spacer()
-        }
+        })
     }
 }
+
+
