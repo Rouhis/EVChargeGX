@@ -15,6 +15,7 @@ struct ContentView: View {
     @State var heights = [CGFloat(110),CGFloat(750)]
   //  @State private var transcript = ""
     @State private var isRecording = false
+    @State private var alert = false
     
     @StateObject var speechRecognizer = SpeechRecognizer()
  //   @State var station = Base(AddressInfo: Info)
@@ -37,14 +38,26 @@ struct ContentView: View {
                                 speechRecognizer.resetTranscript()
                                 speechRecognizer.startTranscribing()
                                 isRecording = true
+                                alert = true
+                            }.alert(isPresented: $alert){
+                                Alert(title: Text("Recording started"),
+                                    message: Text("Press 'End' to end recording"),
+                                      dismissButton: .default(Text("End")){
+                                    speechRecognizer.stopTranscribing()
+                                    isRecording = false
+                                    alert = false
+                                    print(speechRecognizer.transcript)
+                                })
+                                
                             }
-                            Button("End Record"){
+                          /*  Button("End Record"){
                                 speechRecognizer.stopTranscribing()
                                 isRecording = false
+                                alert = false
                                 print(speechRecognizer.transcript)
                                 
                                 
-                            }
+                            }*/
                             StationsListView()
                             Spacer()
                             
