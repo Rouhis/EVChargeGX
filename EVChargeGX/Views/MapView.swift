@@ -19,7 +19,9 @@ struct MapView: View {
         center: CLLocationCoordinate2D(latitude: 60.173767, longitude: 24.688388),
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )
+    @State private var alert = false
     @State private var annotationItems = [AnnotationItem]()
+    @State private var test = ""
     
     var body: some View {
         ZStack {
@@ -51,6 +53,16 @@ struct MapView: View {
                     .shadow(radius: 3)
                     .onTapGesture {
                         print(annotation.title)
+                        alert = true
+                        test = annotation.title
+                    }
+                    .alert(isPresented: $alert) {
+                        Alert(
+                            title: Text(test),
+                            dismissButton: .default(Text ("Navigate")) {
+                                
+                            }
+                        )
                     }
                     
                     .onDisappear {
