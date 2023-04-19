@@ -7,17 +7,25 @@
 import SwiftUI
 import CoreData
 import Drawer
+import AVFoundation
+
 
 struct ContentView: View {
     @State private var isShowingStations = false
     @State var heights = [CGFloat(110),CGFloat(750)]
+  //  @State private var transcript = ""
+    @State private var isRecording = false
+    @State private var alert = false
+    
+    @StateObject var speechRecognizer = SpeechRecognizer()
  //   @State var station = Base(AddressInfo: Info)
     
     
     var body: some View{
         
             ZStack{
-                    MapView()
+        
+                   MapView()
                 
                 Drawer(heights: $heights) {
                     ZStack{
@@ -26,8 +34,34 @@ struct ContentView: View {
                             RoundedRectangle(cornerRadius: 20).frame(width: 60, height: 5, alignment: .center)
                                 .background(Color.white)
                                 .padding(10)
+                            Button("record"){
+                                speechRecognizer.resetTranscript()
+                                speechRecognizer.startTranscribing()
+                                isRecording = true
+                                alert = true
+                            }.alert(isPresented: $alert){
+                                Alert(title: Text("Recording started"),
+                                    message: Text("Press 'End' to end recording"),
+                                      dismissButton: .default(Text("End")){
+                                    speechRecognizer.stopTranscribing()
+                                    isRecording = false
+                                    alert = false
+                                    print(speechRecognizer.transcript)
+                                })
+                                
+                            }
+                          /*  Button("End Record"){
+                                speechRecognizer.stopTranscribing()
+                                isRecording = false
+                                alert = false
+                                print(speechRecognizer.transcript)
+                                
+                                
+                            }*/
                             StationsListView()
                             Spacer()
+                            
+                            
                         }
                     }
                 }.edgesIgnoringSafeArea(.vertical)
@@ -36,14 +70,21 @@ struct ContentView: View {
                 .toolbar{
                     NavigationLink(destination: ProfileView(), label: {
                         Text("Profile")
-                    }).simultaneousGesture(TapGesture().onEnded{
-                   //     print("hmomo petteri\($station)")
-               
+                    }).simultaneousGesture(TapGesture().onEnded{               
                     })
                 }
         }
+    func startRecord(){
+        speechRecognizer.resetTranscript()
+        speechRecognizer.startTranscribing()
+            isRecording = true
     }
 
+    func endRecord(){
+        speechRecognizer.stopTranscribing()
+        isRecording = false
+    }
+    }
 
 
 
