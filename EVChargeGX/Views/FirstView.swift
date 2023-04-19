@@ -85,7 +85,8 @@ struct FirstView: View {
                             firstTimeOpen = false
                         })
                         HStack {
-                            NavigationLink(destination: ContentView(), label:{                            Text("I will do this later")
+                            NavigationLink(destination: ContentView(), label:{
+                                Text("I will do this later")
                                     .foregroundColor(.black)
                                     .underline()
                                     .italic()
@@ -94,15 +95,20 @@ struct FirstView: View {
                             }).simultaneousGesture(TapGesture().onEnded{
                                 print("Later")
                                 firstTimeOpen = false
+                                manufacturer = ""
+                                model = ""
+                                capacity = ""
                             })
                             .padding(.vertical)
                             // Create an information button outside the navigation link. When clicked display additional information as alert
-                            Button(action: {                                alert = true}) {
+                            Button(action: {
+                                alert = true
+                            }) {
                                 Image(systemName: "info.circle").foregroundColor(.blue)
                             }.offset(x: 10, y: 1)
                                 .alert(isPresented: $alert) {
                                     Alert(
-                                        title: Text("You can skip this part and the already made changes will be saved.")
+                                        title: Text("You can skip this part, but vehicle information won't be saved")
                                     )
                                 }
                         }

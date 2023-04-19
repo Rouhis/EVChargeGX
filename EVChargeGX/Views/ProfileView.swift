@@ -29,7 +29,6 @@ struct ProfileView: View {
     @State private var cars: [Car] = []
     
     var body: some View {
-        let car1 = Car(manufacturer: firstManufacturer, model: firstModel, batteryCapacity: firstCapacity)
         ZStack {
             Color(red: 205/255, green: 205/255, blue: 205/255)
                 .ignoresSafeArea()
@@ -39,32 +38,48 @@ struct ProfileView: View {
                         .font(.system(size: 36, design: .default))
                         .padding(.bottom, -15.0)
                 }.onAppear {
+                    print("test", !(firstManufacturer ?? "").isEmpty, firstModel, firstCapacity)
                     // Adds the first car's data to an Array and updates the text fields on profile page with the first car's data
-                    self.cars.append(car1)
-                    manufacturer = firstManufacturer ?? ""
-                    model = firstModel ?? ""
-                    capacity = firstCapacity ?? ""
-                    manufacturerTitle = firstManufacturer ?? "No cars"
+                    if !(firstManufacturer ?? "").isEmpty && !(firstModel ?? "").isEmpty && !(firstCapacity ?? "").isEmpty {
+                        let car1 = Car(manufacturer: firstManufacturer, model: firstModel, batteryCapacity: firstCapacity)
+                        self.cars.append(car1)
+                        manufacturer = firstManufacturer ?? ""
+                        model = firstModel ?? ""
+                        capacity = firstCapacity ?? ""
+                        manufacturerTitle = firstManufacturer ?? "No cars"
+                        print("owned cars test:", cars.count, "and", firstManufacturer, firstModel, firstCapacity)
+                    }
                 }
                 List {
                     VStack() {
-                        Menu {
-                            // Goes through the Car objects in the cars array and adds the objects to a picker
-                            ForEach(cars) { car in
-                                Button("\(car.manufacturer ?? "")", action: {
-                                    // Adds the selected Car object's data to the variables that are used to show the selected car's data
-                                    manufacturerTitle = car.manufacturer ?? "No cars"
-                                    manufacturer = car.manufacturer ?? ""
-                                    model = car.model ?? ""
-                                    capacity = car.batteryCapacity ?? ""
-                                })
+                        HStack {
+                            Menu {
+                                // Goes through the Car objects in the cars array and adds the objects to a picker
+                                ForEach(cars) { car in
+                                    Button("\(car.manufacturer ?? "")", action: {
+                                        // Adds the selected Car object's data to the variables that are used to show the selected car's data
+                                        manufacturerTitle = car.manufacturer ?? "No cars"
+                                        manufacturer = car.manufacturer ?? ""
+                                        model = car.model ?? ""
+                                        capacity = car.batteryCapacity ?? ""
+                                    })
+                                }
+                            } label: {
+                                HStack {
+                                    Text("Selected car: ")
+                                        .foregroundColor(.black)
+                                    Text("\(manufacturerTitle)")
+                                    if !cars.isEmpty {
+                                        Image(systemName: "arrow.down.app")
+                                    }
+                                }
                             }
-                        } label: {
-                            HStack {
-                                Text("Selected car: ")
-                                    .foregroundColor(.black)
-                                Text("\(manufacturerTitle)")
-                                Image(systemName: "arrow.down.app")
+                            if !cars.isEmpty {
+                                Button(action: {
+                                    
+                                }) {
+                                    Image(systemName: "trash")
+                                }.buttonStyle(BorderlessButtonStyle())
                             }
                         }
                         
@@ -107,7 +122,6 @@ struct ProfileView: View {
                         VStack {
                             // Button for adding a new Car object with the user's given values and adds it to the dropdown menu as selected and car information
                             Button(action: {
-                                print("Owned cars:", cars.count)
                                 alertAddCar = true
                                 addManufacturer = ""
                                 addModel = ""
@@ -132,6 +146,7 @@ struct ProfileView: View {
                                     manufacturer = addManufacturer
                                     model = addModel
                                     capacity = addCapacity
+                                    print("Owned cars:", cars.count)
                                 })
                             }
                             .frame(width: 175, height: 50)
