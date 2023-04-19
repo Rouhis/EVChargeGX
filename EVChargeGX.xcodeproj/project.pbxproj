@@ -28,7 +28,6 @@
 		6A2F07F929EC6AD600E2313A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07F829EC6AD600E2313A /* ProfileView.swift */; };
 		6A2F07FC29EC6B2200E2313A /* Drawer in Frameworks */ = {isa = PBXBuildFile; productRef = 6A2F07FB29EC6B2200E2313A /* Drawer */; };
 		6A2F07FE29EC6E2C00E2313A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6A2F07FD29EC6E2C00E2313A /* .gitignore */; };
-		6A6304FB29EFDC4F002E82E8 /* NavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6304FA29EFDC4E002E82E8 /* NavigatorView.swift */; };
 		6AB0F4AA29EC98340032C6CD /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB0F4A929EC98340032C6CD /* PopUpView.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,7 +73,6 @@
 		6A2F07F629EC6AAA00E2313A /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		6A2F07F829EC6AD600E2313A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		6A2F07FD29EC6E2C00E2313A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		6A6304FA29EFDC4E002E82E8 /* NavigatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorView.swift; sourceTree = "<group>"; };
 		6AB0F4A929EC98340032C6CD /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -176,7 +174,6 @@
 				6A2F07F629EC6AAA00E2313A /* MapView.swift */,
 				6AB0F4A929EC98340032C6CD /* PopUpView.swift */,
 				6A2F07F829EC6AD600E2313A /* ProfileView.swift */,
-				6A6304FA29EFDC4E002E82E8 /* NavigatorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -349,7 +346,6 @@
 				6A2F07ED29EC69D800E2313A /* CarModel.swift in Sources */,
 				6A2F07F529EC6A8F00E2313A /* FirstView.swift in Sources */,
 				6A2F07BC29EC68ED00E2313A /* Persistence.swift in Sources */,
-				6A6304FB29EFDC4F002E82E8 /* NavigatorView.swift in Sources */,
 				6A2F07B529EC68EA00E2313A /* ContentView.swift in Sources */,
 				6A2F07F729EC6AAA00E2313A /* MapView.swift in Sources */,
 				6A2F07E729EC697E00E2313A /* DrawerItem.swift in Sources */,
