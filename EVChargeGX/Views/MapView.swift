@@ -20,7 +20,6 @@ struct MapView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )
     @State private var annotationItems = [AnnotationItem]()
-    
     var body: some View {
         ZStack {
             TextField("Search", text: $searchQuery, onCommit: search)

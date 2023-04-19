@@ -9,7 +9,6 @@ import Foundation
  class stationViewModel: ObservableObject {
     @Published var stations: [StationData] = StationData.samplesStations
     @Published var fetching = false
-    
     func fetchData() async {
         fetching = true
         
