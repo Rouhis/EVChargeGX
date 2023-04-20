@@ -38,7 +38,6 @@ struct ProfileView: View {
                         .font(.system(size: 36, design: .default))
                         .padding(.bottom, -15.0)
                 }.onAppear {
-                    print("test", !(firstManufacturer ?? "").isEmpty, firstModel, firstCapacity)
                     // Adds the first car's data to an Array and updates the text fields on profile page with the first car's data
                     if !(firstManufacturer ?? "").isEmpty && !(firstModel ?? "").isEmpty && !(firstCapacity ?? "").isEmpty {
                         let car1 = Car(manufacturer: firstManufacturer, model: firstModel, batteryCapacity: firstCapacity)
@@ -47,7 +46,6 @@ struct ProfileView: View {
                         model = firstModel ?? ""
                         capacity = firstCapacity ?? ""
                         manufacturerTitle = firstManufacturer ?? "No cars"
-                        print("owned cars test:", cars.count, "and", firstManufacturer, firstModel, firstCapacity)
                     }
                 }
                 List {
@@ -57,6 +55,7 @@ struct ProfileView: View {
                                 // Goes through the Car objects in the cars array and adds the objects to a picker
                                 ForEach(cars) { car in
                                     Button("\(car.manufacturer ?? "")", action: {
+                                        print("count: ", cars.count)
                                         // Adds the selected Car object's data to the variables that are used to show the selected car's data
                                         manufacturerTitle = car.manufacturer ?? "No cars"
                                         manufacturer = car.manufacturer ?? ""
@@ -69,14 +68,12 @@ struct ProfileView: View {
                                     Text("Selected car: ")
                                         .foregroundColor(.black)
                                     Text("\(manufacturerTitle)")
-                                    if !cars.isEmpty {
                                         Image(systemName: "arrow.down.app")
-                                    }
                                 }
-                            }
+                            }.id(UUID())
                             if !cars.isEmpty {
                                 Button(action: {
-                                    
+                                    print(cars.count)
                                 }) {
                                     Image(systemName: "trash")
                                 }.buttonStyle(BorderlessButtonStyle())
@@ -151,12 +148,6 @@ struct ProfileView: View {
                             }
                             .frame(width: 175, height: 50)
                             .background(.green)
-                            Button(action: {}) {
-                                Text("Delete selected car")
-                                    .foregroundColor(.black)
-                            }
-                            .frame(width: 175, height: 50)
-                            .background(.red)
                         }
                         .buttonStyle(BorderlessButtonStyle())
                         .padding()
