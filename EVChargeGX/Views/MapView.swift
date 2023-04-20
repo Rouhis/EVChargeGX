@@ -23,7 +23,7 @@ struct MapView: View {
     
     
     
-    struct ClearButton: ViewModifier{
+    struct TextFielButton: ViewModifier{
         @State private var alert = false
         @StateObject var speechRecognizer = SpeechRecognizer()
         @State private var isRecording = false
@@ -64,7 +64,7 @@ struct MapView: View {
     var body: some View {
         
         ZStack {
-            TextField("Search", text: $searchQuery, onCommit: search).modifier(ClearButton(serText: $searchQuery))
+            TextField("Search", text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery))
                 .padding()
                 .background(Color(.systemGray5))
                 .cornerRadius(10)
