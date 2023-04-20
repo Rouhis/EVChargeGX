@@ -32,7 +32,7 @@ struct MapView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 600)
                 .zIndex(1)
-            Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: annotationItems.prefix(10)) { annotation in
+            Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: annotationItems) { annotation in
                 MapAnnotation(coordinate: annotation.coordinate) {
                     VStack {
                         Image(systemName: "bolt.fill")
@@ -84,50 +84,49 @@ struct MapView: View {
                         print("Error decoding JSON: \(error)")
                     } else if let result = result {
                         // Do something with the array of objects here
-                        for (index, item) in result.enumerated() {
+                        for (_, item) in result.enumerated() {
                             let annotationItem = AnnotationItem(
                                 coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
                                 title: item.AddressInfo.Title
                             )
                             annotationItems.append(annotationItem)
                             print(item.AddressInfo.Title)
-                            if index == 9 {
-                                break
-                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+    func search() {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(searchQuery) { placemarks, error in
+            if let error = error {
+                print("Error geocoding search query: \(error.localizedDescription)")
+            } else if let placemark = placemarks?.first {
+                let coordinate = placemark.location?.coordinate
+                print("Coordinates of \(searchQuery): \(coordinate?.latitude ?? 0), \(coordinate?.longitude ?? 0)")
+                region = MKCoordinateRegion(center: coordinate!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+                callApi(latitude: coordinate!.latitude, longitude: coordinate!.longitude) { result, error in
+                    if let error = error {
+                        print("Error decoding JSON: \(error)")
+                    } else if let result = result {
+                        // Do something with the array of objects here
+                        for item in result {
+                            let annotationItem = AnnotationItem(
+                                coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
+                                title: item.AddressInfo.Title
+                            )
+                            annotationItems.append(annotationItem)
+                            print(item.AddressInfo.Title)
                         }
                     }
                 }
             }
         }
     }
-            func search() {
-                let geocoder = CLGeocoder()
-                geocoder.geocodeAddressString(searchQuery) { placemarks, error in
-                    if let error = error {
-                        print("Error geocoding search query: \(error.localizedDescription)")
-                    } else if let placemark = placemarks?.first {
-                        let coordinate = placemark.location?.coordinate
-                        print("Coordinates of \(searchQuery): \(coordinate?.latitude ?? 0), \(coordinate?.longitude ?? 0)")
-                        region = MKCoordinateRegion(center: coordinate!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-                        callApi(latitude: coordinate!.latitude, longitude: coordinate!.longitude) { result, error in
-                            if let error = error {
-                                print("Error decoding JSON: \(error)")
-                            } else if let result = result {
-                                // Do something with the array of objects here
-                                for item in result {
-                                    let annotationItem = AnnotationItem(
-                                        coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
-                                        title: item.AddressInfo.Title
-                                    )
-                                    annotationItems.append(annotationItem)
-                                    print(item.AddressInfo.Title)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+}
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {

@@ -11,7 +11,7 @@ import CoreLocation
 struct FirstView: View {
     @State private var locationManager = CLLocationManager()
     
-
+    
     // variables stored in Appstorage
     @AppStorage("manufacturer") var manufacturer = ""
     @AppStorage("model") var model = ""

@@ -12,17 +12,18 @@ struct EVChargeGXApp: App {
     @AppStorage("firstTimeOpen") var firstTimeOpen = true
 
     var body: some Scene {
-        WindowGroup {
-            // Conditional views. Not working because navigationview is on FirstView, so if ContentView is the first View navigation doesn't work
-            /*if firstTimeOpen {
+            WindowGroup {
+                // Conditional views. Not working because navigationview is on FirstView, so if ContentView is the first View navigation doesn't work
+                /*if firstTimeOpen {
+                 FirstView()
+                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                 } else {
+                 ContentView()
+                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                 }*/
                 FirstView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            } else {
-                ContentView()
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            }*/
-            FirstView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            }
         }
-    }
+    
 }
