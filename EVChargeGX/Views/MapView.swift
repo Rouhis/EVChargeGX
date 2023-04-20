@@ -21,15 +21,57 @@ struct MapView: View {
     )
     @State private var annotationItems = [AnnotationItem]()
     
+    
+    
+    struct ClearButton: ViewModifier{
+        @State private var alert = false
+        @StateObject var speechRecognizer = SpeechRecognizer()
+        @State private var isRecording = false
+        @Binding var serText: String
+        public func body(content: Content) -> some View {
+            ZStack(alignment: .trailing){
+                content
+                if !serText.isEmpty{
+                    Button(action: {
+                        self.serText = ""
+                    }){
+                        Image(systemName: "delete.left").foregroundColor(Color(UIColor.opaqueSeparator))
+                    }
+                } else{
+                    Button(action: {
+                        alert = true
+                        speechRecognizer.resetTranscript()
+                        speechRecognizer.startTranscribing()
+                        isRecording = true
+                    }){Image(systemName: "mic.circle").foregroundColor(Color(UIColor.opaqueSeparator))
+                    }.alert(isPresented: $alert){
+                        Alert(title: Text("Recording started"),
+                              message: Text("Press 'End' to end recording"),
+                              dismissButton: .default(Text("End")){
+                            speechRecognizer.stopTranscribing()
+                            isRecording = false
+                            alert = false
+                            self.serText = speechRecognizer.transcript
+                            print(speechRecognizer.transcript)
+                        })
+                        
+                    }
+                }
+            }
+        }
+    }
+    
     var body: some View {
+        
         ZStack {
-            TextField("Search", text: $searchQuery, onCommit: search)
+            TextField("Search", text: $searchQuery, onCommit: search).modifier(ClearButton(serText: $searchQuery))
                 .padding()
                 .background(Color(.systemGray5))
                 .cornerRadius(10)
                 .padding(.horizontal)
                 .padding(.bottom, 600)
                 .zIndex(1)
+            
             Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: annotationItems.prefix(10)) { annotation in
                 MapAnnotation(coordinate: annotation.coordinate) {
                     VStack {
@@ -88,34 +130,34 @@ struct MapView: View {
             }
         }
     }
-            func search() {
-                let geocoder = CLGeocoder()
-                geocoder.geocodeAddressString(searchQuery) { placemarks, error in
+    func search() {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(searchQuery) { placemarks, error in
+            if let error = error {
+                print("Error geocoding search query: \(error.localizedDescription)")
+            } else if let placemark = placemarks?.first {
+                let coordinate = placemark.location?.coordinate
+                print("Coordinates of \(searchQuery): \(coordinate?.latitude ?? 0), \(coordinate?.longitude ?? 0)")
+                region = MKCoordinateRegion(center: coordinate!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+                callApi(latitude: coordinate!.latitude, longitude: coordinate!.longitude) { result, error in
                     if let error = error {
-                        print("Error geocoding search query: \(error.localizedDescription)")
-                    } else if let placemark = placemarks?.first {
-                        let coordinate = placemark.location?.coordinate
-                        print("Coordinates of \(searchQuery): \(coordinate?.latitude ?? 0), \(coordinate?.longitude ?? 0)")
-                        region = MKCoordinateRegion(center: coordinate!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-                        callApi(latitude: coordinate!.latitude, longitude: coordinate!.longitude) { result, error in
-                            if let error = error {
-                                print("Error decoding JSON: \(error)")
-                            } else if let result = result {
-                                // Do something with the array of objects here
-                                for item in result {
-                                    let annotationItem = AnnotationItem(
-                                        coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
-                                        title: item.AddressInfo.Title
-                                    )
-                                    annotationItems.append(annotationItem)
-                                    print(item.AddressInfo.Title)
-                                }
-                            }
+                        print("Error decoding JSON: \(error)")
+                    } else if let result = result {
+                        // Do something with the array of objects here
+                        for item in result {
+                            let annotationItem = AnnotationItem(
+                                coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
+                                title: item.AddressInfo.Title
+                            )
+                            annotationItems.append(annotationItem)
+                            print(item.AddressInfo.Title)
                         }
                     }
                 }
             }
         }
+    }
+}
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
