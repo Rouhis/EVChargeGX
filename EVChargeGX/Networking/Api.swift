@@ -26,6 +26,7 @@ func callApi(latitude: Double, longitude: Double, completion: @escaping ([Base]?
         do {
             let decoder = JSONDecoder()
             let result = try decoder.decode([Base].self, from: data)
+            print(result)
             completion(result, nil)
         } catch {
             completion(nil, error)

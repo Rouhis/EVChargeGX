@@ -10,7 +10,9 @@ struct AnnotationItem: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
     let title: String
+    let Connections : [Connections]
 }
+
 struct MapView: View {
     fileprivate let locationManager: CLLocationManager = CLLocationManager()
     private var regionDebouncer = Debouncer(delay: 0.5)
@@ -22,8 +24,9 @@ struct MapView: View {
     )
     @State private var alert = false
     @State private var annotationItems = [AnnotationItem]()
-    @State private var test = ""
-
+    @State private var stationName = ""
+    @State private var chargerType = ""
+    @State private var chargerPower: Double = 0
     var body: some View {
         ZStack {
             TextField("Search", text: $searchQuery, onCommit: search)
@@ -72,11 +75,14 @@ struct MapView: View {
                     .onTapGesture {
                         print(annotation.title)
                         alert = true
-                        test = annotation.title
+                        stationName = annotation.title
+                        chargerType = annotation.Connections.first?.ConnectionType.Title ?? ""
+                        chargerPower = annotation.Connections.first?.PowerKW ?? 0
                     }
                     .alert(isPresented: $alert) {
                         Alert(
-                            title: Text(test),
+                            title: Text(stationName),
+                            message: Text(chargerType + "\n" + String(format: "%0.1f", chargerPower) + " kW"),
                             dismissButton: .default(Text ("Navigate")) {
                                 
                             }
@@ -87,6 +93,7 @@ struct MapView: View {
                         annotationItems.removeAll()
                     }
                 }
+                //This onChange is responsible for changes on the map
             }.onChange(of: region.center.latitude) { _ in
                     // Remove old annotations
                     annotationItems.removeAll()
@@ -99,10 +106,11 @@ struct MapView: View {
                                 print("Error decoding JSON: \(error)")
                             } else if let result = result {
                                 // Add new annotations
-                                for (_, item) in result.enumerated() {
+                                for item in result{
                                     let annotationItem = AnnotationItem(
                                         coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
-                                        title: item.AddressInfo.Title
+                                        title: item.AddressInfo.Title,
+                                        Connections: item.Connections
                                     )
                                     annotationItems.append(annotationItem)
                                     print(item.AddressInfo.Title)
@@ -129,7 +137,8 @@ struct MapView: View {
                         for (_, item) in result.enumerated() {
                             let annotationItem = AnnotationItem(
                                 coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
-                                title: item.AddressInfo.Title
+                                title: item.AddressInfo.Title,
+                                Connections: item.Connections
                             )
                             annotationItems.append(annotationItem)
                             print(item.AddressInfo.Title)
@@ -158,8 +167,6 @@ struct MapView: View {
                 
                 // Change the region to be centered on the search query coordinates
                 region = MKCoordinateRegion(center: coordinate!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-                
-                // Call the API with the latitude and longitude of the search
             }
         }
 
