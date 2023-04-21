@@ -44,10 +44,7 @@ struct ProfileView: View {
                         let car1 = Car(manufacturer: firstManufacturer, model: firstModel, batteryCapacity: firstCapacity)
                         carDelete = car1
                         self.cars.append(car1)
-                        manufacturer = firstManufacturer ?? ""
-                        model = firstModel ?? ""
-                        capacity = firstCapacity ?? ""
-                        manufacturerTitle = firstManufacturer ?? "No cars"
+                        updateInformation(newTitle: firstManufacturer ?? "No cars", newManufacturer: firstManufacturer ?? "", newModel: firstModel ?? "", newCapacity: firstCapacity ?? "")
                     }
                 }
                 List {
@@ -59,10 +56,7 @@ struct ProfileView: View {
                                     Button("\(car.manufacturer ?? "")", action: {
                                         print("count: ", cars.count)
                                         // Adds the selected Car object's data to the variables that are used to show the selected car's data
-                                        manufacturerTitle = car.manufacturer ?? "No cars"
-                                        manufacturer = car.manufacturer ?? ""
-                                        model = car.model ?? ""
-                                        capacity = car.batteryCapacity ?? ""
+                                        updateInformation(newTitle: car.manufacturer ?? "No cars", newManufacturer: car.manufacturer ?? "", newModel: car.model ?? "", newCapacity: car.batteryCapacity ?? "")
                                         carDelete = car
                                     })
                                 }
@@ -84,16 +78,10 @@ struct ProfileView: View {
                                     }
                                     if !cars.isEmpty {
                                         let carCount = cars.count - 1
-                                        manufacturerTitle = cars[carCount].manufacturer ?? "No cars"
-                                        manufacturer = cars[carCount].manufacturer ?? ""
-                                        model = cars[carCount].model ?? ""
-                                        capacity = cars[carCount].batteryCapacity ?? ""
+                                        updateInformation(newTitle: cars[carCount].manufacturer ?? "No cars", newManufacturer: cars[carCount].manufacturer ?? "", newModel: cars[carCount].model ?? "", newCapacity: cars[carCount].batteryCapacity ?? "")
                                         carDelete = cars[carCount]
                                     } else {
-                                        manufacturerTitle = "No cars"
-                                        manufacturer = ""
-                                        model = ""
-                                        capacity = ""
+                                        updateInformation(newTitle: "No cars", newManufacturer: "", newModel: "", newCapacity: "")
                                     }
                                 }) {
                                     Image(systemName: "trash")
@@ -141,9 +129,7 @@ struct ProfileView: View {
                             // Button for adding a new Car object with the user's given values and adds it to the dropdown menu as selected and car information
                             Button(action: {
                                 alertAddCar = true
-                                addManufacturer = ""
-                                addModel = ""
-                                addCapacity = ""
+                                updateInformation(newTitle: "", newManufacturer: "", newModel: "", newCapacity: "")
                             }) {
                                 HStack {
                                     Text("Add a new car")
@@ -161,10 +147,7 @@ struct ProfileView: View {
                                     carDelete = newCar
                                     cars.append(newCar)
                                     // Updates the selected car's information and adds the new car to the dropdown menu as selected
-                                    manufacturerTitle = addManufacturer
-                                    manufacturer = addManufacturer
-                                    model = addModel
-                                    capacity = addCapacity
+                                    updateInformation(newTitle: addManufacturer, newManufacturer: addManufacturer, newModel: addModel, newCapacity: addCapacity)
                                     print("Owned cars:", cars.count, carDelete.manufacturer)
                                 })
                             }
@@ -179,6 +162,13 @@ struct ProfileView: View {
                 .listRowSeparator(.hidden)
             }
         }
+    }
+    
+    func updateInformation(newTitle: String, newManufacturer: String, newModel: String, newCapacity: String) {
+        manufacturerTitle = newTitle
+        manufacturer = newManufacturer
+        model = newModel
+        capacity = newCapacity
     }
 }
 
