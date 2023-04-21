@@ -4,38 +4,14 @@
 //
 //  Created by iosdev on 21.4.2023.
 //
-
+import UIKit
 import SwiftUI
+import MapKit
 
-struct StationDetailsView: View {
-    let stationName: String
-    let chargerType: String
-    let chargerPower: Double
-    @Binding var isPresented: Bool
-
-    var body: some View {
-        NavigationStack{
-            VStack {
-                NavigationLink(destination: ProfileView()) {
-                    Text("Go to Profile")
-                }
-                Text(stationName)
-                    .font(.title)
-                    .padding()
-                Divider()
-                Text(chargerType + "\n" + String(format: "%0.1f", chargerPower) + " kW")
-                    .padding()
-                Spacer()
-                Button(action: {
-                    isPresented = false
-                }, label: {
-                    Text("Close")
-                        .padding()
-                })
-                
-                
-            }
-        }
+struct DetailView: View {
+    var body: some View{
+       mapView()
     }
+   
 }
 
