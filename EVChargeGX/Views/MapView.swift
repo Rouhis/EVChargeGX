@@ -47,9 +47,11 @@ struct MapView: View {
                     .background(Color.white)
                     .clipShape(Circle())
             })
-            .padding(.top, 500)
+            .padding(.top, 500.0)
             .padding(.leading, 300)
+            .frame(width: nil)
             .zIndex(1)
+            
             
             Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: annotationItems)
             { annotation in
@@ -76,7 +78,7 @@ struct MapView: View {
                         print(annotation.title)
                         alert = true
                         stationName = annotation.title
-                        chargerType = annotation.Connections.first?.ConnectionType.Title ?? ""
+                        chargerType = annotation.Connections.first?.ConnectionType?.Title ?? ""
                         chargerPower = annotation.Connections.first?.PowerKW ?? 0
                     }
                     .alert(isPresented: $alert) {

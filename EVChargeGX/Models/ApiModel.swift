@@ -19,16 +19,18 @@ struct Info:Codable{
 }
 
 struct Connections:Codable {
-    let ConnectionType: ConnectionType
-    let Level: ChargerInfo
-    let PowerKW: Double
-}
-struct ConnectionType:Codable {
-    let Title:String
+    let ConnectionType: ConnectionType?
+ //   let Level: ChargerInfo?
+    let PowerKW: Double?
 }
 
+struct ConnectionType:Codable {
+    let Title:String?
+}
+/*
 struct ChargerInfo:Codable {
-    let Comments: String
-    let IsFastChargeCapable: Bool
+    let Comments: String?
+    let IsFastChargeCapable: Bool?
     
 }
+*/
