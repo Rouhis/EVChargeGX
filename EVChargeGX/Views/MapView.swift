@@ -211,21 +211,6 @@ struct MapView: View {
                 
                 // Change the region to be centered on the search query coordinates
                 region = MKCoordinateRegion(center: coordinate!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-                callApi(latitude: coordinate!.latitude, longitude: coordinate!.longitude) { result, error in
-                    if let error = error {
-                        print("Error decoding JSON: \(error)")
-                    } else if let result = result {
-                        // Do something with the array of objects here
-                        for item in result {
-                            let annotationItem = AnnotationItem(
-                                coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
-                                title: item.AddressInfo.Title
-                            )
-                            annotationItems.append(annotationItem)
-                            print(item.AddressInfo.Title)
-                        }
-                    }
-                }
             }
         }
 

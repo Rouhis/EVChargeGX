@@ -148,7 +148,6 @@ struct ProfileView: View {
                                     cars.append(newCar)
                                     // Updates the selected car's information and adds the new car to the dropdown menu as selected
                                     updateInformation(newTitle: addManufacturer, newManufacturer: addManufacturer, newModel: addModel, newCapacity: addCapacity)
-                                    print("Owned cars:", cars.count, carDelete.manufacturer)
                                 })
                             }
                             .frame(width: 175, height: 50)

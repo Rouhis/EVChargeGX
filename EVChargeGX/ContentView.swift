@@ -13,10 +13,10 @@ struct ContentView: View {
     @State private var isShowingStations = false
     @State var heights = [CGFloat(110),CGFloat(750)]
     //  @State private var transcript = ""
-   // @State private var isRecording = false
-   // @State private var alert = false
+    // @State private var isRecording = false
+    // @State private var alert = false
     
-   // @StateObject var speechRecognizer = SpeechRecognizer()
+    // @StateObject var speechRecognizer = SpeechRecognizer()
     //   @State var station = Base(AddressInfo: Info)
     
     
@@ -41,44 +41,34 @@ struct ContentView: View {
                 }.edgesIgnoringSafeArea(.vertical)
             }
             
-                .toolbar{
-                    NavigationLink(destination: ProfileView(), label: {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.blue)
-                            
-                    }).simultaneousGesture(TapGesture().onEnded{
-                   
-               
-                    })
-                }
-            }.edgesIgnoringSafeArea(.vertical)
-        }
-        
-        .toolbar{
-            NavigationLink(destination: ProfileView(), label: {
-                Text("Profile")
-            }).simultaneousGesture(TapGesture().onEnded{
-                
-                
-            })
-        }
+            .toolbar{
+                NavigationLink(destination: ProfileView(), label: {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.blue)
+                    
+                }).simultaneousGesture(TapGesture().onEnded{
+                    
+                    
+                })
+            }
+        }.edgesIgnoringSafeArea(.vertical)
     }
-    /*
-    func startRecord(){
-        speechRecognizer.resetTranscript()
-        speechRecognizer.startTranscribing()
-        isRecording = true
-    }
-    
-    func endRecord(){
-        speechRecognizer.stopTranscribing()
-        isRecording = false
-        alert = false
-        print(speechRecognizer.transcript)
-    }*/
 }
+/*
+ func startRecord(){
+ speechRecognizer.resetTranscript()
+ speechRecognizer.startTranscribing()
+ isRecording = true
+ }
+ 
+ func endRecord(){
+ speechRecognizer.stopTranscribing()
+ isRecording = false
+ alert = false
+ print(speechRecognizer.transcript)
+ }*/
 
 
 
