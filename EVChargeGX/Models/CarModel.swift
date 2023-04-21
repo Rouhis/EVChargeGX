@@ -15,14 +15,15 @@ class Car: Identifiable, Equatable {
     var manufacturer: String?
     var model: String?
     var batteryCapacity: String?
-
+    
     init(manufacturer: String?, model: String?, batteryCapacity: String?) {
         self.manufacturer = manufacturer
         self.model = model
         self.batteryCapacity = batteryCapacity
     }
-
+    
     func deleteCar() {
         print("Car deleted")
+        
     }
 }

@@ -4,7 +4,6 @@
 //
 //  Created by iosdev on 16.4.2023.
 //
-
 import SwiftUI
 
 struct PopUpView: View {
@@ -16,5 +15,3 @@ struct PopUpView: View {
         Text(stationName)
     }
 }
-
-
