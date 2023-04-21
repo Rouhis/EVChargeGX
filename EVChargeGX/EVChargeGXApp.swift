@@ -9,7 +9,6 @@ import SwiftUI
 @main
 struct EVChargeGXApp: App {
     let persistenceController = PersistenceController.shared
-    @AppStorage("firstTimeOpen") var firstTimeOpen = true
 
     var body: some Scene {
             WindowGroup {
@@ -21,7 +20,7 @@ struct EVChargeGXApp: App {
                  ContentView()
                  .environment(\.managedObjectContext, persistenceController.container.viewContext)
                  }*/
-                FirstView()
+                StartView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
         }
