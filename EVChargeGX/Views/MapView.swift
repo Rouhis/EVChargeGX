@@ -124,7 +124,7 @@ struct MapView: View {
                         sheetIsPresented = true
                     }
                     .sheet(isPresented: $sheetIsPresented) {
-                        DetailView()
+                        MyView()
                     }
                 .onDisappear {
                     annotationItems.removeAll()

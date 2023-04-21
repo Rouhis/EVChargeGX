@@ -10,7 +10,7 @@ import MapKit
 
 struct DetailView: View {
     var body: some View{
-       mapView()
+       Text(":D")
     }
    
 }
