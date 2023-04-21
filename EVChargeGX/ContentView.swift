@@ -69,7 +69,11 @@ struct ContentView: View {
             
                 .toolbar{
                     NavigationLink(destination: ProfileView(), label: {
-                        Text("Profile")
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.blue)
+                            
                     }).simultaneousGesture(TapGesture().onEnded{
                    
                
