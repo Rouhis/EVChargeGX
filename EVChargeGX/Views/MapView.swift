@@ -27,9 +27,51 @@ struct MapView: View {
     @State private var stationName = ""
     @State private var chargerType = ""
     @State private var chargerPower: Double = 0
+    
+    
+    
+    struct TextFielButton: ViewModifier{
+        @State private var alert = false
+        @StateObject var speechRecognizer = SpeechRecognizer()
+        @State private var isRecording = false
+        @Binding var serText: String
+        public func body(content: Content) -> some View {
+            ZStack(alignment: .trailing){
+                content
+                if !serText.isEmpty{
+                    Button(action: {
+                        self.serText = ""
+                    }){
+                        Image(systemName: "delete.left").foregroundColor(Color(UIColor.opaqueSeparator))
+                    }
+                } else{
+                    Button(action: {
+                        alert = true
+                        speechRecognizer.resetTranscript()
+                        speechRecognizer.startTranscribing()
+                        isRecording = true
+                    }){Image(systemName: "mic.circle").foregroundColor(Color(UIColor.opaqueSeparator))
+                    }.alert(isPresented: $alert){
+                        Alert(title: Text("Recording started"),
+                              message: Text("Press 'End' to end recording"),
+                              dismissButton: .default(Text("End")){
+                            speechRecognizer.stopTranscribing()
+                            isRecording = false
+                            alert = false
+                            self.serText = speechRecognizer.transcript
+                            print(speechRecognizer.transcript)
+                        })
+                        
+                    }
+                }
+            }
+        }
+    }
+    
     var body: some View {
+        
         ZStack {
-            TextField("Search", text: $searchQuery, onCommit: search)
+            TextField("Search", text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery))
                 .padding()
                 .background(Color(.systemGray5))
                 .cornerRadius(10)
@@ -169,6 +211,21 @@ struct MapView: View {
                 
                 // Change the region to be centered on the search query coordinates
                 region = MKCoordinateRegion(center: coordinate!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+                callApi(latitude: coordinate!.latitude, longitude: coordinate!.longitude) { result, error in
+                    if let error = error {
+                        print("Error decoding JSON: \(error)")
+                    } else if let result = result {
+                        // Do something with the array of objects here
+                        for item in result {
+                            let annotationItem = AnnotationItem(
+                                coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
+                                title: item.AddressInfo.Title
+                            )
+                            annotationItems.append(annotationItem)
+                            print(item.AddressInfo.Title)
+                        }
+                    }
+                }
             }
         }
 

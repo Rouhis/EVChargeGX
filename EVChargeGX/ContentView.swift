@@ -7,62 +7,36 @@
 import SwiftUI
 import CoreData
 import Drawer
-import AVFoundation
 
 
 struct ContentView: View {
     @State private var isShowingStations = false
     @State var heights = [CGFloat(110),CGFloat(750)]
-  //  @State private var transcript = ""
-    @State private var isRecording = false
-    @State private var alert = false
+    //  @State private var transcript = ""
+   // @State private var isRecording = false
+   // @State private var alert = false
     
-    @StateObject var speechRecognizer = SpeechRecognizer()
- //   @State var station = Base(AddressInfo: Info)
+   // @StateObject var speechRecognizer = SpeechRecognizer()
+    //   @State var station = Base(AddressInfo: Info)
     
     
     var body: some View{
         
-            ZStack{
-                    
-                    MapView()
-                
-                Drawer(heights: $heights) {
-                    ZStack{
-                        Color(uiColor: UIColor.secondarySystemBackground)
-                        VStack{
-                            RoundedRectangle(cornerRadius: 20).frame(width: 60, height: 5, alignment: .center)
-                                .background(Color.white)
-                                .padding(10)
-                            Button("record"){
-                                speechRecognizer.resetTranscript()
-                                speechRecognizer.startTranscribing()
-                                isRecording = true
-                                alert = true
-                            }.alert(isPresented: $alert){
-                                Alert(title: Text("Recording started"),
-                                    message: Text("Press 'End' to end recording"),
-                                      dismissButton: .default(Text("End")){
-                                    speechRecognizer.stopTranscribing()
-                                    isRecording = false
-                                    alert = false
-                                    print(speechRecognizer.transcript)
-                                })
-                                
-                            }
-                          /*  Button("End Record"){
-                                speechRecognizer.stopTranscribing()
-                                isRecording = false
-                                alert = false
-                                print(speechRecognizer.transcript)
-                                
-                                
-                            }*/
-                            StationsListView()
-                            Spacer()
-                            
-                            
-                        }
+        ZStack{
+            
+            MapView()
+            
+            Drawer(heights: $heights) {
+                ZStack{
+                    Color(uiColor: UIColor.secondarySystemBackground)
+                    VStack{
+                        RoundedRectangle(cornerRadius: 20).frame(width: 60, height: 5, alignment: .center)
+                            .background(Color.white)
+                            .padding(10)
+                        StationsListView()
+                        Spacer()
+                        
+                        
                     }
                 }.edgesIgnoringSafeArea(.vertical)
             }
@@ -79,18 +53,32 @@ struct ContentView: View {
                
                     })
                 }
+            }.edgesIgnoringSafeArea(.vertical)
         }
+        
+        .toolbar{
+            NavigationLink(destination: ProfileView(), label: {
+                Text("Profile")
+            }).simultaneousGesture(TapGesture().onEnded{
+                
+                
+            })
+        }
+    }
+    /*
     func startRecord(){
         speechRecognizer.resetTranscript()
         speechRecognizer.startTranscribing()
-            isRecording = true
+        isRecording = true
     }
-
+    
     func endRecord(){
         speechRecognizer.stopTranscribing()
         isRecording = false
-    }
-    }
+        alert = false
+        print(speechRecognizer.transcript)
+    }*/
+}
 
 
 
@@ -101,12 +89,12 @@ struct SettingsView: View {
     var body: some View{
         CircleNumberView(color: color, number: 1)
             .navigationTitle("Settings")
-            Text("Test")
-                .toolbar{
-                    Button("test"){
-                    }
-                    
-                }.padding()
+        Text("Test")
+            .toolbar{
+                Button("test"){
+                }
+                
+            }.padding()
     }
 }
 
@@ -114,8 +102,8 @@ struct CircleNumberView: View{
     
     var color: Color
     var number: Int
-
-
+    
+    
     
     var body: some View {
         ZStack{
@@ -126,7 +114,7 @@ struct CircleNumberView: View{
                 .foregroundColor(.white)
                 .font(.system(size: 70, weight: .bold))
             
-
+            
         }
     }
 }
