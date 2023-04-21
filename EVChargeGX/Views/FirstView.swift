@@ -22,7 +22,7 @@ struct FirstView: View {
     @AppStorage("firstTimeOpen") var firstTimeOpen = UserDefaults.standard.bool(forKey: "firstTimeOpen")
     @State private var alert = false
     var body: some View {
-        NavigationView{
+        NavigationStack{
             ZStack {
                 Color(red: 205/255, green: 205/255, blue: 205/255)
                     .ignoresSafeArea()
