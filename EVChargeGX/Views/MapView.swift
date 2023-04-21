@@ -27,7 +27,7 @@ struct MapView: View {
     @State private var stationName = ""
     @State private var chargerType = ""
     @State private var chargerPower: Double = 0
-    
+    @State private var sheetIsPresented = false
     
     
     struct TextFielButton: ViewModifier{
@@ -69,7 +69,6 @@ struct MapView: View {
     }
     
     var body: some View {
-        
         ZStack {
             TextField("Search", text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery))
                 .padding()
@@ -78,7 +77,7 @@ struct MapView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 600)
                 .zIndex(1)
-
+            
             Button(action: {
                 if let userLocation = locationManager.location?.coordinate {
                     region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
@@ -98,6 +97,7 @@ struct MapView: View {
             Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: annotationItems)
             { annotation in
                 MapAnnotation(coordinate: annotation.coordinate) {
+                    
                     VStack {
                         
                         Image(systemName: "bolt.fill")
@@ -118,53 +118,46 @@ struct MapView: View {
                     .shadow(radius: 3)
                     .onTapGesture {
                         print(annotation.title)
-                        alert = true
                         stationName = annotation.title
                         chargerType = annotation.Connections.first?.ConnectionType?.Title ?? ""
                         chargerPower = annotation.Connections.first?.PowerKW ?? 0
+                        sheetIsPresented = true
                     }
-                    .alert(isPresented: $alert) {
-                        Alert(
-                            title: Text(stationName),
-                            message: Text(chargerType + "\n" + String(format: "%0.1f", chargerPower) + " kW"),
-                            dismissButton: .default(Text ("Navigate")) {
-                                
-                            }
-                        )
+                    .sheet(isPresented: $sheetIsPresented) {
+                        StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower, isPresented: $sheetIsPresented)
                     }
-                    
-                    .onDisappear {
-                        annotationItems.removeAll()
-                    }
-                }
-                //This onChange is responsible for changes on the map
-            }.onChange(of: region.center.latitude) { _ in
-                    // Remove old annotations
+                .onDisappear {
                     annotationItems.removeAll()
-
-                    // Debounce the API call by 0.5 seconds
-                    regionDebouncer.debounce {
-                        // Call the API with the new region coordinates
-                        callApi(latitude: region.center.latitude, longitude: region.center.longitude) { result, error in
-                            if let error = error {
-                                print("Error decoding JSON: \(error)")
-                            } else if let result = result {
-                                // Add new annotations
-                                for item in result{
-                                    let annotationItem = AnnotationItem(
-                                        coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
-                                        title: item.AddressInfo.Title,
-                                        Connections: item.Connections
-                                    )
-                                    annotationItems.append(annotationItem)
-                                    print(item.AddressInfo.Title)
-                                }
-                            }
+                }
+            }
+            //This onChange is responsible for changes on the map
+        }.onChange(of: region.center.latitude) { _ in
+            // Remove old annotations
+            annotationItems.removeAll()
+            
+            // Debounce the API call by 0.5 seconds
+            regionDebouncer.debounce {
+                // Call the API with the new region coordinates
+                callApi(latitude: region.center.latitude, longitude: region.center.longitude) { result, error in
+                    if let error = error {
+                        print("Error decoding JSON: \(error)")
+                    } else if let result = result {
+                        // Add new annotations
+                        for item in result{
+                            let annotationItem = AnnotationItem(
+                                coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
+                                title: item.AddressInfo.Title,
+                                Connections: item.Connections
+                            )
+                            annotationItems.append(annotationItem)
+                            print(item.AddressInfo.Title)
                         }
                     }
                 }
-
+            }
         }
+        
+    }
         .edgesIgnoringSafeArea(.all)
         .onAppear {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -192,29 +185,29 @@ struct MapView: View {
                 }
             }
         }
-        
-    }
+    
+}
 //Search function for the searchbar
-    func search() {
-        // Create a CLGeocoder instance to geocode the search query
-        let geocoder = CLGeocoder()
-
-        // Use the geocoder to look up the coordinates of the search query
-        geocoder.geocodeAddressString(searchQuery) { placemarks, error in
-            if let error = error {
-                // If there is an error, print it to the console
-                print("Error geocoding search query: \(error.localizedDescription)")
-            } else if let placemark = placemarks?.first {
-                // If the geocoding was successful, get the coordinates of the first placemark
-                let coordinate = placemark.location?.coordinate
-                print("Coordinates of \(searchQuery): \(coordinate?.latitude ?? 0), \(coordinate?.longitude ?? 0)")
-                
-                // Change the region to be centered on the search query coordinates
-                region = MKCoordinateRegion(center: coordinate!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-            }
+func search() {
+    // Create a CLGeocoder instance to geocode the search query
+    let geocoder = CLGeocoder()
+    
+    // Use the geocoder to look up the coordinates of the search query
+    geocoder.geocodeAddressString(searchQuery) { placemarks, error in
+        if let error = error {
+            // If there is an error, print it to the console
+            print("Error geocoding search query: \(error.localizedDescription)")
+        } else if let placemark = placemarks?.first {
+            // If the geocoding was successful, get the coordinates of the first placemark
+            let coordinate = placemark.location?.coordinate
+            print("Coordinates of \(searchQuery): \(coordinate?.latitude ?? 0), \(coordinate?.longitude ?? 0)")
+            
+            // Change the region to be centered on the search query coordinates
+            region = MKCoordinateRegion(center: coordinate!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
         }
-
     }
+    
+}
 }
 
 struct MapView_Previews: PreviewProvider {
