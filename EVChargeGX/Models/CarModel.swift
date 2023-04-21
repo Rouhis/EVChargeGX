@@ -7,7 +7,11 @@
 
 import Foundation
 
-class Car: Identifiable {
+class Car: Identifiable, Equatable {
+    static func == (lhs: Car, rhs: Car) -> Bool {
+        lhs.manufacturer == rhs.manufacturer && lhs.model == rhs.model && lhs.batteryCapacity == rhs.batteryCapacity
+    }
+    
     var manufacturer: String?
     var model: String?
     var batteryCapacity: String?

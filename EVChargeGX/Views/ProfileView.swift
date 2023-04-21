@@ -27,6 +27,7 @@ struct ProfileView: View {
     @State private var alert = false
     @State private var alertAddCar = false
     @State private var cars: [Car] = []
+    @State private var carDelete: Car = Car(manufacturer: "", model: "", batteryCapacity: "")
     
     var body: some View {
         ZStack {
@@ -41,6 +42,7 @@ struct ProfileView: View {
                     // Adds the first car's data to an Array and updates the text fields on profile page with the first car's data
                     if !(firstManufacturer ?? "").isEmpty && !(firstModel ?? "").isEmpty && !(firstCapacity ?? "").isEmpty {
                         let car1 = Car(manufacturer: firstManufacturer, model: firstModel, batteryCapacity: firstCapacity)
+                        carDelete = car1
                         self.cars.append(car1)
                         manufacturer = firstManufacturer ?? ""
                         model = firstModel ?? ""
@@ -61,6 +63,7 @@ struct ProfileView: View {
                                         manufacturer = car.manufacturer ?? ""
                                         model = car.model ?? ""
                                         capacity = car.batteryCapacity ?? ""
+                                        carDelete = car
                                     })
                                 }
                             } label: {
@@ -68,12 +71,30 @@ struct ProfileView: View {
                                     Text("Selected car: ")
                                         .foregroundColor(.black)
                                     Text("\(manufacturerTitle)")
+                                    if !cars.isEmpty {
                                         Image(systemName: "arrow.down.app")
+                                    }
                                 }
                             }.id(UUID())
                             if !cars.isEmpty {
                                 Button(action: {
                                     print(cars.count)
+                                    if let index = cars.firstIndex(of: carDelete) {
+                                        cars.remove(at: index)
+                                    }
+                                    if !cars.isEmpty {
+                                        let carCount = cars.count - 1
+                                        manufacturerTitle = cars[carCount].manufacturer ?? "No cars"
+                                        manufacturer = cars[carCount].manufacturer ?? ""
+                                        model = cars[carCount].model ?? ""
+                                        capacity = cars[carCount].batteryCapacity ?? ""
+                                        carDelete = cars[carCount]
+                                    } else {
+                                        manufacturerTitle = "No cars"
+                                        manufacturer = ""
+                                        model = ""
+                                        capacity = ""
+                                    }
                                 }) {
                                     Image(systemName: "trash")
                                 }.buttonStyle(BorderlessButtonStyle())
@@ -137,13 +158,14 @@ struct ProfileView: View {
                                 Button("Save", action: {
                                     // Creates a new Car object, adds it to the cars array
                                     let newCar = Car(manufacturer: addManufacturer, model: addModel, batteryCapacity: addCapacity)
+                                    carDelete = newCar
                                     cars.append(newCar)
                                     // Updates the selected car's information and adds the new car to the dropdown menu as selected
                                     manufacturerTitle = addManufacturer
                                     manufacturer = addManufacturer
                                     model = addModel
                                     capacity = addCapacity
-                                    print("Owned cars:", cars.count)
+                                    print("Owned cars:", cars.count, carDelete.manufacturer)
                                 })
                             }
                             .frame(width: 175, height: 50)
