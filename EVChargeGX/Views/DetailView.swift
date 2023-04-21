@@ -23,7 +23,7 @@ struct StationDetailsView: View {
                     .font(.title)
                     .padding()
                 Divider()
-                Text("\(chargerPower) kW, \(chargerType)")
+                Text(chargerType + "\n" + String(format: "%0.1f", chargerPower) + " kW")
                     .padding()
                 Spacer()
                 Button(action: {
