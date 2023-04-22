@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  EVChargeGX
+
+  Created by iosdev on 22.4.2023.
+  
+*/
+
+"Search" = "Etsi";
+
+"Profile" = "Profiili";
+
+"Selected car: " = "Valittu auto: ";
+
+"Manufacturer: " = "Valmistaja: ";
+
+"Owned connectors" = "Sinun piuhat";
+
+"Manufacturer" = "Valmistaja";
+
+"Battery capacity(kWh)" = "Akun kapasiteetti";

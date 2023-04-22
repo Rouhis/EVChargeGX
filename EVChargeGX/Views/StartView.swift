@@ -19,7 +19,7 @@ struct StartView: View {
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             } else {
                 ContentView()
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .environment(\.locale, .init(identifier: "fi"))
             }
         }
     }

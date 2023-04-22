@@ -90,7 +90,8 @@ struct ProfileView: View {
                         }
                         
                         VStack(alignment: .leading) {
-                            Text("Manufacturer: \(manufacturer)")
+                            Text("Manufacturer: ")
+                            Text("\(manufacturer)")
                                 .padding(.bottom, 5)
                             Text("Model: \(model)")
                                 .padding(.bottom, 5)
