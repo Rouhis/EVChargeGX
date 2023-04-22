@@ -10,12 +10,20 @@
 
 "Profile" = "Profiili";
 
-"Selected car: " = "Valittu auto: ";
+"Selected car:" = "Valittu auto:";
 
-"Manufacturer: " = "Valmistaja: ";
+"Manufacturer:" = "Valmistaja:";
+
+"Model:" = "Malli:";
+
+"Battery capacity(kWh):" = "Akun kapasiteetti:";
 
 "Owned connectors" = "Sinun piuhat";
 
 "Manufacturer" = "Valmistaja";
 
+"Model" = "Malli";
+
 "Battery capacity(kWh)" = "Akun kapasiteetti";
+
+"No cars" = "Ei autoja";
