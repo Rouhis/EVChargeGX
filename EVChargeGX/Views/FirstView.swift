@@ -71,6 +71,9 @@ struct FirstView: View {
                                     .foregroundColor(.white)
                                     .font(.headline)
                                     .cornerRadius(10)
+                            }).simultaneousGesture(TapGesture().onEnded{
+                                print("Saved")
+                                firstTimeOpen = false
                             })
                         .padding(.horizontal)
                         
