@@ -70,7 +70,7 @@ struct MapView: View {
     
     var body: some View {
         ZStack {
-            TextField("Search", text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery))
+            TextField("Search" , text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery))
                 .padding()
                 .background(Color(.systemGray5))
                 .cornerRadius(10)

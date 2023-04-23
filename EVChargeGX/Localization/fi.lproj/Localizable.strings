@@ -14,8 +14,33 @@
 
 "Manufacturer: " = "Valmistaja: ";
 
-"Owned connectors" = "Sinun piuhat";
+"Owned connectors" = "Omistetut liitännät";
 
 "Manufacturer" = "Valmistaja";
 
 "Battery capacity(kWh)" = "Akun kapasiteetti";
+
+"You can skip this part, but vehicle information won't be saved" = "Voi ohittaa tämän, mutta mitään dataa ajoneuvostasi ei talleneta";
+
+"Welcome to EVChargeGX!" = "Tervetuloa";
+
+"Vehicle information" = "Ajoneuvon tiedot";
+
+"Please give us information about your electric vehicle" = "Täytä tiedot sinun sähköajoneuvostasi";
+
+"Preferred/Owned connector types" = "Ensisijaiset/omistetut liitintyypit";
+
+"Done" = "Valmis";
+
+"I will do this later" = "Teen tämän myöhemmin";
+
+"Model: " = "Malli: ";
+
+"Your owned connector input is used to filter out stations with connectors you don't own." = "Sinulle näytetään asemia omistamiesi liittimien mukaan";
+
+"Add a new car" = "Lisää auto";
+
+"Cancel" = "Peruuta";
+
+"Save" = "Tallenna";
+

@@ -322,6 +322,7 @@
 				en,
 				Base,
 				fi,
+				"zh-HK",
 			);
 			mainGroup = 6A2F07A629EC68EA00E2313A;
 			packageReferences = (
