@@ -12,6 +12,7 @@
 		6A0347EC29F28F100067E06D /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0347EB29F28F100067E06D /* DetailView.swift */; };
 		6A0347F329F42B700067E06D /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0347F229F42B700067E06D /* Localization.swift */; };
 		6A0347F629F42D6C0067E06D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A0347F829F42D6C0067E06D /* Localizable.strings */; };
+		6A0347FC29F5920B0067E06D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0347FB29F5920B0067E06D /* Persistence.swift */; };
 		6A2F07B329EC68EA00E2313A /* EVChargeGXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07B229EC68EA00E2313A /* EVChargeGXApp.swift */; };
 		6A2F07B529EC68EA00E2313A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2F07B429EC68EA00E2313A /* ContentView.swift */; };
 		6A2F07B729EC68ED00E2313A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A2F07B629EC68ED00E2313A /* Assets.xcassets */; };
@@ -32,7 +33,6 @@
 		6A2F07FC29EC6B2200E2313A /* Drawer in Frameworks */ = {isa = PBXBuildFile; productRef = 6A2F07FB29EC6B2200E2313A /* Drawer */; };
 		6A2F07FE29EC6E2C00E2313A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6A2F07FD29EC6E2C00E2313A /* .gitignore */; };
 		6A6304FD29F28530002E82E8 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6304FC29F28530002E82E8 /* StartView.swift */; };
-		6AB4550F29F459D800602758 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB4550E29F459D800602758 /* Persistence.swift */; };
 		6ACB600F29EE7D1B00BFC55B /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACB600E29EE7D1B00BFC55B /* SpeechRecognizer.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +60,7 @@
 		6A0347F229F42B700067E06D /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		6A0347F729F42D6C0067E06D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6A0347F929F42D710067E06D /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6A0347FB29F5920B0067E06D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6A2F07AF29EC68EA00E2313A /* EVChargeGX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EVChargeGX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A2F07B229EC68EA00E2313A /* EVChargeGXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EVChargeGXApp.swift; sourceTree = "<group>"; };
 		6A2F07B429EC68EA00E2313A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -83,7 +84,6 @@
 		6A2F07F829EC6AD600E2313A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		6A2F07FD29EC6E2C00E2313A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6A6304FC29F28530002E82E8 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
-		6AB4550E29F459D800602758 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Persistence.swift; path = ../../../../.Trash/Persistence.swift; sourceTree = "<group>"; };
 		6ACB600E29EE7D1B00BFC55B /* SpeechRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,9 +155,9 @@
 				6A2F07B429EC68EA00E2313A /* ContentView.swift */,
 				6A2F07B629EC68ED00E2313A /* Assets.xcassets */,
 				6A2F07C029EC68ED00E2313A /* Info.plist */,
-				6AB4550E29F459D800602758 /* Persistence.swift */,
 				6A2F07BD29EC68ED00E2313A /* EVChargeGX.xcdatamodeld */,
 				6A2F07B829EC68ED00E2313A /* Preview Content */,
+				6A0347FB29F5920B0067E06D /* Persistence.swift */,
 			);
 			path = EVChargeGX;
 			sourceTree = "<group>";
@@ -371,13 +371,13 @@
 			files = (
 				6ACB600F29EE7D1B00BFC55B /* SpeechRecognizer.swift in Sources */,
 				6A0347EC29F28F100067E06D /* DetailView.swift in Sources */,
-				6AB4550F29F459D800602758 /* Persistence.swift in Sources */,
 				6A2F07F529EC6A8F00E2313A /* FirstView.swift in Sources */,
 				6A2F07B529EC68EA00E2313A /* ContentView.swift in Sources */,
 				6A0347F329F42B700067E06D /* Localization.swift in Sources */,
 				6A2F07F729EC6AAA00E2313A /* MapView.swift in Sources */,
 				6A2F07E729EC697E00E2313A /* DrawerItem.swift in Sources */,
 				6A2F07EF29EC69FD00E2313A /* StationData.swift in Sources */,
+				6A0347FC29F5920B0067E06D /* Persistence.swift in Sources */,
 				6A2F07F129EC6A2200E2313A /* StationViewModel.swift in Sources */,
 				6A6304FD29F28530002E82E8 /* StartView.swift in Sources */,
 				6A0347E829F17F4D0067E06D /* Debouncer.swift in Sources */,
