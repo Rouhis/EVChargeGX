@@ -42,6 +42,10 @@ struct ProfileView: View {
                         .padding(.bottom, -15.0)
                 }.onAppear {
                     // Adds the first car's data to an Array and updates the text fields on profile page with the first car's data
+                    print(":D", cars.isEmpty)
+                    if !cars.isEmpty {
+                        updateInformation(newTitle: cars[0].manufacturer ?? "", newManufacturer: cars[0].manufacturer ?? "", newModel: cars[0].model ?? "", newCapacity: cars[0].batteryCapacity ?? "")
+                    }
                     print(":S", cars.isEmpty, "car count:", cars.count)
                     if !(firstManufacturer ?? "").isEmpty && !(firstModel ?? "").isEmpty && !(firstCapacity ?? "").isEmpty {
                         if cars.isEmpty && firstTimeOpen {
