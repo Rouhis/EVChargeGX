@@ -21,7 +21,7 @@ struct ProfileView: View {
     @State private var firstCapacity = UserDefaults.standard.string(forKey: "capacity")
     // Other variables
     @State private var manufacturer = ""
-    @State private var manufacturerTitle = "No cars"
+    @State private var manufacturerTitle = ""
     @State private var model = ""
     @State private var capacity = ""
     @State private var addManufacturer = ""
@@ -45,7 +45,7 @@ struct ProfileView: View {
                     print(":S", cars.isEmpty, "car count:", cars.count)
                     if !(firstManufacturer ?? "").isEmpty && !(firstModel ?? "").isEmpty && !(firstCapacity ?? "").isEmpty {
                         if cars.isEmpty && firstTimeOpen {
-                            updateInformation(newTitle: firstManufacturer ?? "No cars", newManufacturer: firstManufacturer ?? "", newModel: firstModel ?? "", newCapacity: firstCapacity ?? "")
+                            updateInformation(newTitle: firstManufacturer ?? "", newManufacturer: firstManufacturer ?? "", newModel: firstModel ?? "", newCapacity: firstCapacity ?? "")
                             let car1 = Car(context: moc)
                             car1.manufacturer = manufacturer
                             car1.model = model
@@ -67,7 +67,7 @@ struct ProfileView: View {
                                     Button("\(car.manufacturer ?? "")", action: {
                                         print("count: ", cars.count)
                                         // Adds the selected Car object's data to the variables that are used to show the selected car's data
-                                        updateInformation(newTitle: car.manufacturer ?? "No cars", newManufacturer: car.manufacturer ?? "", newModel: car.model ?? "", newCapacity: car.batteryCapacity ?? "")
+                                        updateInformation(newTitle: car.manufacturer ?? "", newManufacturer: car.manufacturer ?? "", newModel: car.model ?? "", newCapacity: car.batteryCapacity ?? "")
                                         carDelete = car
                                     })
                                 }
@@ -75,7 +75,11 @@ struct ProfileView: View {
                                 HStack {
                                     Text("Selected car: ")
                                         .foregroundColor(.black)
-                                    Text("\(manufacturerTitle)")
+                                    if manufacturerTitle.isEmpty {
+                                        Text("No cars")
+                                    } else {
+                                        Text("\(manufacturerTitle)")
+                                    }
                                     if !cars.isEmpty {
                                         Image(systemName: "arrow.down.app")
                                     }
@@ -89,10 +93,10 @@ struct ProfileView: View {
                                     print("Car count after delete", cars.count)
                                     if !cars.isEmpty {
                                         let carCount = cars.count - 1
-                                        updateInformation(newTitle: cars[carCount].manufacturer ?? "No cars", newManufacturer: cars[carCount].manufacturer ?? "", newModel: cars[carCount].model ?? "", newCapacity: cars[carCount].batteryCapacity ?? "")
+                                        updateInformation(newTitle: cars[carCount].manufacturer ?? "", newManufacturer: cars[carCount].manufacturer ?? "", newModel: cars[carCount].model ?? "", newCapacity: cars[carCount].batteryCapacity ?? "")
                                         carDelete = cars[carCount]
                                     } else {
-                                        updateInformation(newTitle: "No cars", newManufacturer: "", newModel: "", newCapacity: "")
+                                        updateInformation(newTitle: "", newManufacturer: "", newModel: "", newCapacity: "")
                                     }
                                 }) {
                                     Image(systemName: "trash")
