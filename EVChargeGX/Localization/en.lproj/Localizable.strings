@@ -9,13 +9,19 @@
 
 "Profile" = "Profile";
 
-"Selected car: " = "Selected car: ";
+"Selected car:" = "Selected car:";
 
-"Manufacturer: " = "Manufacturer:" ;
+"Manufacturer:" = "Manufacturer:";
+
+"Model:" = "Model:";
+
+"Battery capacity(kWh):" = "Battery capacity(kWh):";
 
 "Owned connectors" = "Owned connectors";
 
 "Manufacturer" = "Manufacturer";
+
+"Model" = "Model";
 
 "Battery capacity(kWh)" = "Battery capacity(kWh)";
 
@@ -42,3 +48,4 @@
 "Cancel" = "Cancel";
 
 "Save" = "Save";
+"No cars" = "No cars";
