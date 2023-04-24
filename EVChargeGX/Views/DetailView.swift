@@ -26,33 +26,70 @@ struct StationDetailsView: View {
         NavigationStack {
             VStack {
                 Text(stationName)
-                    .font(.title)
-                    .padding()
-                Divider()
-                Text(chargerType + "\n" + String(format: "%0.1f", chargerPower) + " kW")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
                     .padding()
                 
+                Divider()
+                
+                HStack {
+                    VStack(alignment: .leading) {
+                        
+                        Text(chargerType)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                        
+                        Text(String(format: "%.1f kW", chargerPower))
+                            .font(.subheadline)
+                    }
+                    
+                    Spacer()
+                }
+                .padding()
+                
                 // Map view
-                Map(coordinateRegion: $region, showsUserLocation: true , annotationItems: [StationAnnotation(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), title: stationName)]) { annotation in
+                Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: [StationAnnotation(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), title: stationName)]) { annotation in
                     MapMarker(coordinate: annotation.coordinate)
                 }
                 .frame(height: 300)
-                //Button for opening maps
+                .cornerRadius(10)
+                .padding()
+                
                 Button(action: {
                     openMaps()
                 }, label: {
                     Text("Open in Maps")
+                        .fontWeight(.semibold)
                         .padding()
+                        .foregroundColor(.white)
                 })
+                .background(Color.blue)
+                .cornerRadius(10)
+                .padding()
+                
                 Spacer()
+                
                 Button(action: {
                     isPresented = false
                 }, label: {
                     Text("Close")
+                        .fontWeight(.semibold)
                         .padding()
+                        .foregroundColor(.white)
                 })
+                .background(Color.gray)
+                .cornerRadius(10)
+                .padding()
             }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: Button(action: {
+                isPresented = false
+            }, label: {
+                Image(systemName: "xmark.circle")
+                    .font(.title)
+            }))
         }
+        
     }
     
     // Helper funciton to open maps
