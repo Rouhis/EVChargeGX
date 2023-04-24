@@ -4,11 +4,12 @@
 //
 //  Created by iosdev on 16.4.2023.
 //
-
+//This is the model for the API so we get only the data we want from the API
 import Foundation
 
 struct Base:Codable{
     let AddressInfo: Info
+    let Connections : [Connections]
 }
 struct Info:Codable{
     let Title: String
@@ -16,3 +17,20 @@ struct Info:Codable{
     let Latitude: Double
     let Longitude: Double
 }
+
+struct Connections:Codable {
+    let ConnectionType: ConnectionType?
+ //   let Level: ChargerInfo?
+    let PowerKW: Double?
+}
+
+struct ConnectionType:Codable {
+    let Title:String?
+}
+/*
+struct ChargerInfo:Codable {
+    let Comments: String?
+    let IsFastChargeCapable: Bool?
+    
+}
+*/

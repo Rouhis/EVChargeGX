@@ -1,0 +1,54 @@
+/* 
+  Localizable.strings
+  EVChargeGX
+
+  Created by iosdev on 22.4.2023.
+  
+*/
+"Search" = "Search";
+
+"Profile" = "Profile";
+
+"Selected car:" = "Selected car:";
+
+"Manufacturer:" = "Manufacturer:";
+
+"Model:" = "Model:";
+
+"Battery capacity(kWh):" = "Battery capacity(kWh):";
+
+"Owned connectors" = "Owned connectors";
+
+"Manufacturer" = "Manufacturer";
+
+"Model" = "Model";
+
+"Battery capacity(kWh)" = "Battery capacity(kWh)";
+
+"You can skip this part, but vehicle information won't be saved" = "You can skip this part, but vehicle information won't be saved";
+
+"Welcome!" = "Welcome!";
+
+"Vehicle information" = "Vehicle information";
+
+"Please give us information about your electric vehicle" = "Please give us information about your electric vehicle";
+
+"Preferred/Owned connector types" = "Preferred/Owned connector types";
+
+"Done" = "Done";
+
+"I will do this later"= "I will do this later";
+
+"Model: " = "Model: ";
+
+"Your owned connector input is used to filter out stations with connectors you don't own." = "Your owned connector input is used to filter out stations with connectors you don't own.";
+
+"Add a new car" = "Add a new car";
+
+"Cancel" = "Cancel";
+
+"Save" = "Save";
+
+"No cars" = "No cars";
+
+"Our app uses your location to give you information about charging stations near you" = "Our app uses your location to give you information about charging stations near you";

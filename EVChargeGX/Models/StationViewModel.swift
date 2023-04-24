@@ -8,6 +8,7 @@
 import Foundation
 
  class stationViewModel: ObservableObject {
+     
     @Published var stations = [StationData]()
     @Published var fetching = false
     
