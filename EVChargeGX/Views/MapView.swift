@@ -28,7 +28,8 @@ struct MapView: View {
     @State private var chargerType = ""
     @State private var chargerPower: Double = 0
     @State private var sheetIsPresented = false
-    
+    @State private var stationLatitude: Double = 0
+    @State private var stationLongitude: Double = 0
     
     struct TextFielButton: ViewModifier{
         @State private var alert = false
@@ -121,10 +122,13 @@ struct MapView: View {
                         stationName = annotation.title
                         chargerType = annotation.Connections.first?.ConnectionType?.Title ?? ""
                         chargerPower = annotation.Connections.first?.PowerKW ?? 0
+                        stationLatitude = annotation.coordinate.latitude
+                        stationLongitude = annotation.coordinate.longitude
+                        
                         sheetIsPresented = true
                     }
                     .sheet(isPresented: $sheetIsPresented) {
-                        StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower, isPresented: $sheetIsPresented)
+                        StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, isPresented: $sheetIsPresented)
                     }
                 .onDisappear {
                     annotationItems.removeAll()
