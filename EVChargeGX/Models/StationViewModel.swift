@@ -6,31 +6,32 @@
 //
 
 import Foundation
+import CoreLocation
 
- class stationViewModel: ObservableObject {
+class stationViewModel: ObservableObject {
      
     @Published var stations = [StationData]()
     @Published var fetching = false
     
-     @MainActor
+    @MainActor
     func fetchData() async {
         fetching = true
         
-        await callApi(latitude: 37.785834, longitude: -122.406417){
-            result, error in
+        await callApi(latitude: getUserLocation(manager: CLLocationManager())?.latitude ?? 0.0, longitude: getUserLocation(manager: CLLocationManager())?.longitude ?? 0.0 ) { result, error in
             if let error = error {
                 print("Error decoding JSON: \(error)")
             } else if let result = result {
                 // Do something with the array of objects here
-                for item in result {
-                    self.stations.append(StationData(name: item.AddressInfo.Title, address: item.AddressInfo.AddressLine1, latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude))
-                    
+                DispatchQueue.main.async { [weak self] in
+                    self?.stations = result.map {
+                        StationData(name: $0.AddressInfo.Title,
+                                    address: $0.AddressInfo.AddressLine1,
+                                    latitude: $0.AddressInfo.Latitude,
+                                    longitude: $0.AddressInfo.Longitude)
+                    }
+                    self?.fetching = false
                 }
             }
-            
         }
-        
-        
-        fetching = false
     }
 }
