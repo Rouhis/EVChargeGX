@@ -95,7 +95,8 @@ struct ProfileView: View {
                                             .foregroundColor(.primary)
                                     }
                                 }
-                            }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                            }.id(UUID())
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                             
                             if !cars.isEmpty {
                                 Button(action: {
