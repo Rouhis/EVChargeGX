@@ -13,6 +13,14 @@ struct AnnotationItem: Identifiable {
     let Connections : [Connections]
 }
 
+public func getUserLocation(manager: CLLocationManager) -> CLLocationCoordinate2D? {
+     guard let userLocation = manager.location?.coordinate else {
+         return nil
+     }
+     print("test \(userLocation)")
+     return userLocation
+ }
+ 
 struct MapView: View {
     fileprivate let locationManager: CLLocationManager = CLLocationManager()
     private var regionDebouncer = Debouncer(delay: 0.5)
@@ -31,11 +39,15 @@ struct MapView: View {
     @State private var stationLatitude: Double = 0
     @State private var stationLongitude: Double = 0
     
+    @State private var speechTranscript = ""
+
+
     struct TextFielButton: ViewModifier{
         @State private var alert = false
         @StateObject var speechRecognizer = SpeechRecognizer()
         @State private var isRecording = false
         @Binding var serText: String
+        @Binding var speechTranscript: String
         public func body(content: Content) -> some View {
             ZStack(alignment: .trailing){
                 content
@@ -60,7 +72,9 @@ struct MapView: View {
                             isRecording = false
                             alert = false
                             self.serText = speechRecognizer.transcript
+                            self.speechTranscript = speechRecognizer.transcript
                             print(speechRecognizer.transcript)
+                            
                         })
                         
                     }
@@ -71,18 +85,20 @@ struct MapView: View {
     
     var body: some View {
         ZStack {
-            TextField("Search" , text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery))
-                .padding()
-                .background(Color(.systemGray5))
-                .cornerRadius(10)
-                .padding(.horizontal)
-                .padding(.bottom, 600)
-                .zIndex(1)
+            TextField("Search", text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery, speechTranscript: $speechTranscript)).onChange(of: speechTranscript){ newValue in
+                searchQuery = newValue
+                search()}
+                            .padding()
+                            .background(Color(.systemGray5))
+                            .cornerRadius(10)
+                            .padding(.horizontal)
+                            .padding(.bottom, 600)
+                            .zIndex(1)
             
             Button(action: {
-                if let userLocation = locationManager.location?.coordinate {
-                    region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-                }
+                if let userLocation = getUserLocation(manager: locationManager) {
+                       region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+                   }
             }, label: {
                 Image(systemName: "location.fill")
                     .padding()
@@ -193,6 +209,8 @@ struct MapView: View {
 }
 //Search function for the searchbar
 func search() {
+    let query = searchQuery.isEmpty ? speechTranscript : searchQuery
+
     // Create a CLGeocoder instance to geocode the search query
     let geocoder = CLGeocoder()
     
@@ -219,4 +237,5 @@ struct MapView_Previews: PreviewProvider {
         MapView()
     }
 }
+
 

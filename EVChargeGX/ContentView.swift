@@ -23,23 +23,22 @@ struct ContentView: View {
     var body: some View{
         
         ZStack{
-            
             MapView()
-            
-            Drawer(heights: $heights) {
-                ZStack{
-                    Color(uiColor: UIColor.secondarySystemBackground)
-                    VStack{
-                        RoundedRectangle(cornerRadius: 20).frame(width: 60, height: 5, alignment: .center)
-                            .background(Color.white)
-                            .padding(10)
-                        StationsListView()
-                        Spacer()
-                        
-                        
+
+                Drawer(heights: $heights) {
+                    ZStack{
+                        Color(.systemBackground)
+                        VStack{
+                            RoundedRectangle(cornerRadius: 20).frame(width: 60, height: 5, alignment: .center)
+                                .background(Color.white)
+                                .padding(10)
+                            
+                            StationsListView()
+                            Spacer()
+                        }
                     }
-                }.edgesIgnoringSafeArea(.vertical)
-            }
+                }
+                .edgesIgnoringSafeArea(.vertical)
             
             .toolbar{
                 NavigationLink(destination: ProfileView(), label: {
