@@ -41,7 +41,10 @@ struct MapView: View {
     
     @State private var speechTranscript = ""
 
-
+    @AppStorage("type2") var type2 = UserDefaults.standard.bool(forKey: "type2")
+    @AppStorage("ccs") var ccs = UserDefaults.standard.bool(forKey: "ccs")
+    @AppStorage("chademo") var chademo = UserDefaults.standard.bool(forKey: "chademo")
+    
     struct TextFielButton: ViewModifier{
         @State private var alert = false
         @StateObject var speechRecognizer = SpeechRecognizer()
@@ -169,7 +172,20 @@ struct MapView: View {
                                 title: item.AddressInfo.Title,
                                 Connections: item.Connections
                             )
-                            annotationItems.append(annotationItem)
+                            let test = item.Connections[0].ConnectionType?.Title ?? ""
+                            print(":DDD", test, type2, ccs, chademo)
+                                if type2 && test.contains("Type 2") {
+                                    print(":lll", "Type 2 toimii", type2)
+                                    annotationItems.append(annotationItem)
+                                } else if ccs && test.contains("CCS") {
+                                    print(":lll", "ccs toimii", ccs)
+                                    annotationItems.append(annotationItem)
+                                } else if chademo && test.contains("CHAdeMO") {
+                                    print(":lll","chademo toimii", chademo)
+                                    annotationItems.append(annotationItem)
+                                } else {
+                                    print(":ppp", "No stations with connectors")
+                                }
                             print(item.AddressInfo.Title)
                         }
                     }
@@ -197,7 +213,20 @@ struct MapView: View {
                                 title: item.AddressInfo.Title,
                                 Connections: item.Connections
                             )
-                            annotationItems.append(annotationItem)
+                            let test = item.Connections[0].ConnectionType?.Title ?? ""
+                            print(":DDD", test, type2, ccs, chademo)
+                                if type2 && test.contains("Type 2") {
+                                    print(":lll", "Type 2 toimii", type2)
+                                    annotationItems.append(annotationItem)
+                                } else if ccs && test.contains("CCS") {
+                                    print(":lll", "ccs toimii", ccs)
+                                    annotationItems.append(annotationItem)
+                                } else if chademo && test.contains("CHAdeMO") {
+                                    print(":lll","chademo toimii", chademo)
+                                    annotationItems.append(annotationItem)
+                                } else {
+                                    print(":ppp", "No stations with connectors")
+                                }
                             print(item.AddressInfo.Title)
                             
                         }
