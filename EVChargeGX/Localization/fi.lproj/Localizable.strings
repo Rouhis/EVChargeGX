@@ -1,0 +1,57 @@
+/* 
+  Localizable.strings
+  EVChargeGX
+
+  Created by iosdev on 22.4.2023.
+  
+*/
+
+"Search" = "Etsi";
+
+"Profile" = "Profiili";
+
+"Selected car:" = "Valittu auto:";
+
+"Manufacturer:" = "Valmistaja:";
+
+"Model:" = "Malli:";
+
+"Battery capacity(kWh):" = "Akun kapasiteetti:";
+
+"Owned connectors" = "Omistetut liitännät";
+
+"Manufacturer" = "Valmistaja";
+
+"Model" = "Malli";
+
+"Battery capacity(kWh)" = "Akun kapasiteetti";
+
+"You can skip this part, but vehicle information won't be saved" = "Voi ohittaa tämän, mutta mitään dataa ajoneuvostasi ei talleneta";
+
+"Welcome!" = "Tervetuloa";
+
+"Vehicle information" = "Ajoneuvon tiedot";
+
+"Please give us information about your electric vehicle" = "Täytä tiedot sinun sähköajoneuvostasi";
+
+"Preferred/Owned connector types" = "Ensisijaiset/omistetut liitintyypit";
+
+"Done" = "Valmis";
+
+"I will do this later" = "Teen tämän myöhemmin";
+
+"Model: " = "Malli: ";
+
+"Your owned connector input is used to filter out stations with connectors you don't own." = "Sinulle näytetään asemia omistamiesi liittimien mukaan";
+
+"Add a new car" = "Lisää auto";
+
+"Cancel" = "Peruuta";
+
+"Save" = "Tallenna";
+
+"No cars" = "Ei autoja";
+
+"Our app uses your location to give you information about charging stations near you" = "Applikaatio käyttää sijaintiasi näyttääkseen latausasemia lähelläsi";
+
+"Open in Maps" = "Avaa mapsissa";

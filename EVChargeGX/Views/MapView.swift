@@ -28,7 +28,8 @@ struct MapView: View {
     @State private var chargerType = ""
     @State private var chargerPower: Double = 0
     @State private var sheetIsPresented = false
-    
+    @State private var stationLatitude: Double = 0
+    @State private var stationLongitude: Double = 0
     
     struct TextFielButton: ViewModifier{
         @State private var alert = false
@@ -70,7 +71,7 @@ struct MapView: View {
     
     var body: some View {
         ZStack {
-            TextField("Search", text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery))
+            TextField("Search" , text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery))
                 .padding()
                 .background(Color(.systemGray5))
                 .cornerRadius(10)
@@ -121,10 +122,13 @@ struct MapView: View {
                         stationName = annotation.title
                         chargerType = annotation.Connections.first?.ConnectionType?.Title ?? ""
                         chargerPower = annotation.Connections.first?.PowerKW ?? 0
+                        stationLatitude = annotation.coordinate.latitude
+                        stationLongitude = annotation.coordinate.longitude
+                        
                         sheetIsPresented = true
                     }
                     .sheet(isPresented: $sheetIsPresented) {
-                        MyView()
+                        StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, isPresented: $sheetIsPresented)
                     }
                 .onDisappear {
                     annotationItems.removeAll()

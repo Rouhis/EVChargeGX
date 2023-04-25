@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct ProfileView: View {
-    
+    // Access managed object context with this variable to save data to CoreData
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var cars: FetchedResults<Car>
     // Variables from UserDefaults
     @AppStorage("type2") var type2 = UserDefaults.standard.bool(forKey: "type2")
     @AppStorage("ccs") var ccs = UserDefaults.standard.bool(forKey: "ccs")
     @AppStorage("chademo") var chademo = UserDefaults.standard.bool(forKey: "chademo")
+    @AppStorage("firstTimeOpen") var firstTimeOpen = UserDefaults.standard.bool(forKey: "firstTimeOpen")
     @State private var firstManufacturer = UserDefaults.standard.string(forKey: "manufacturer")
     @State private var firstModel = UserDefaults.standard.string(forKey: "model")
     @State private var firstCapacity = UserDefaults.standard.string(forKey: "capacity")
     // Other variables
     @State private var manufacturer = ""
-    @State private var manufacturerTitle = "No cars"
+    @State private var manufacturerTitle = ""
     @State private var model = ""
     @State private var capacity = ""
     @State private var addManufacturer = ""
@@ -26,8 +29,7 @@ struct ProfileView: View {
     @State private var addCapacity = ""
     @State private var alert = false
     @State private var alertAddCar = false
-    @State private var cars: [Car] = []
-    @State private var carDelete: Car = Car(manufacturer: "", model: "", batteryCapacity: "")
+    @State private var carDelete: Car = Car()
     
     var body: some View {
         ZStack {
@@ -40,11 +42,25 @@ struct ProfileView: View {
                         .padding(.bottom, -15.0)
                 }.onAppear {
                     // Adds the first car's data to an Array and updates the text fields on profile page with the first car's data
+                    print(":D", cars.isEmpty)
+                    updateInformation(newTitle: firstManufacturer ?? "", newManufacturer: firstManufacturer ?? "", newModel: firstModel ?? "", newCapacity: firstCapacity ?? "")
+                    if !cars.isEmpty {
+                        updateInformation(newTitle: cars[0].manufacturer ?? "", newManufacturer: cars[0].manufacturer ?? "", newModel: cars[0].model ?? "", newCapacity: cars[0].batteryCapacity ?? "")
+                    }
+                    print(":S", cars.isEmpty, "car count:", cars.count)
                     if !(firstManufacturer ?? "").isEmpty && !(firstModel ?? "").isEmpty && !(firstCapacity ?? "").isEmpty {
-                        let car1 = Car(manufacturer: firstManufacturer, model: firstModel, batteryCapacity: firstCapacity)
-                        carDelete = car1
-                        self.cars.append(car1)
-                        updateInformation(newTitle: firstManufacturer ?? "No cars", newManufacturer: firstManufacturer ?? "", newModel: firstModel ?? "", newCapacity: firstCapacity ?? "")
+                        if cars.isEmpty && !firstTimeOpen {
+                            updateInformation(newTitle: firstManufacturer ?? "", newManufacturer: firstManufacturer ?? "", newModel: firstModel ?? "", newCapacity: firstCapacity ?? "")
+                            let car1 = Car(context: moc)
+                            car1.manufacturer = manufacturer
+                            car1.model = model
+                            car1.batteryCapacity = capacity
+                            
+                            try? moc.save()
+                            carDelete = car1
+                        }
+
+                        
                     }
                 }
                 List {
@@ -56,7 +72,7 @@ struct ProfileView: View {
                                     Button("\(car.manufacturer ?? "")", action: {
                                         print("count: ", cars.count)
                                         // Adds the selected Car object's data to the variables that are used to show the selected car's data
-                                        updateInformation(newTitle: car.manufacturer ?? "No cars", newManufacturer: car.manufacturer ?? "", newModel: car.model ?? "", newCapacity: car.batteryCapacity ?? "")
+                                        updateInformation(newTitle: car.manufacturer ?? "", newManufacturer: car.manufacturer ?? "", newModel: car.model ?? "", newCapacity: car.batteryCapacity ?? "")
                                         carDelete = car
                                     })
                                 }
@@ -64,7 +80,11 @@ struct ProfileView: View {
                                 HStack {
                                     Text("Selected car: ")
                                         .foregroundColor(.black)
-                                    Text("\(manufacturerTitle)")
+                                    if manufacturerTitle.isEmpty {
+                                        Text("No cars")
+                                    } else {
+                                        Text("\(manufacturerTitle)")
+                                    }
                                     if !cars.isEmpty {
                                         Image(systemName: "arrow.down.app")
                                     }
@@ -72,31 +92,40 @@ struct ProfileView: View {
                             }.id(UUID())
                             if !cars.isEmpty {
                                 Button(action: {
-                                    print(cars.count)
-                                    if let index = cars.firstIndex(of: carDelete) {
-                                        cars.remove(at: index)
-                                    }
+                                    print("Car count before delete", cars.count)
+                                        moc.delete(carDelete)
+                                    try? moc.save()
+                                    print("Car count after delete", cars.count)
                                     if !cars.isEmpty {
                                         let carCount = cars.count - 1
-                                        updateInformation(newTitle: cars[carCount].manufacturer ?? "No cars", newManufacturer: cars[carCount].manufacturer ?? "", newModel: cars[carCount].model ?? "", newCapacity: cars[carCount].batteryCapacity ?? "")
+                                        updateInformation(newTitle: cars[carCount].manufacturer ?? "", newManufacturer: cars[carCount].manufacturer ?? "", newModel: cars[carCount].model ?? "", newCapacity: cars[carCount].batteryCapacity ?? "")
                                         carDelete = cars[carCount]
                                     } else {
-                                        updateInformation(newTitle: "No cars", newManufacturer: "", newModel: "", newCapacity: "")
+                                        updateInformation(newTitle: "", newManufacturer: "", newModel: "", newCapacity: "")
                                     }
                                 }) {
                                     Image(systemName: "trash")
                                 }.buttonStyle(BorderlessButtonStyle())
                             }
-                        }
+                        }.padding(.bottom, 10)
                         
                         VStack(alignment: .leading) {
-                            Text("Manufacturer: \(manufacturer)")
-                                .padding(.bottom, 5)
-                            Text("Model: \(model)")
-                                .padding(.bottom, 5)
-                            Text("Battery capacity(kWh): \(capacity)")
+                            HStack {
+                                Text("Manufacturer:")
+                                Text("\(manufacturer)")
+                            }
+                            .padding(.bottom, 5)
+                            HStack {
+                                Text("Model:")
+                                Text("\(model)")
+                            }
+                            .padding(.bottom, 5)
+                            HStack {
+                                Text("Battery capacity(kWh):")
+                                Text("\(capacity)")
+                            }
+
                         }
-                        .padding()
                     }
                     .padding()
                     .frame(maxWidth: .infinity)
@@ -129,7 +158,9 @@ struct ProfileView: View {
                             // Button for adding a new Car object with the user's given values and adds it to the dropdown menu as selected and car information
                             Button(action: {
                                 alertAddCar = true
-                                updateInformation(newTitle: "", newManufacturer: "", newModel: "", newCapacity: "")
+                                addManufacturer = ""
+                                addModel = ""
+                                addCapacity = ""
                             }) {
                                 HStack {
                                     Text("Add a new car")
@@ -143,9 +174,13 @@ struct ProfileView: View {
                                 Button("Cancel", action: {})
                                 Button("Save", action: {
                                     // Creates a new Car object, adds it to the cars array
-                                    let newCar = Car(manufacturer: addManufacturer, model: addModel, batteryCapacity: addCapacity)
+                                    let newCar = Car(context: moc)
+                                    newCar.manufacturer = addManufacturer
+                                    newCar.model = addModel
+                                    newCar.batteryCapacity = addCapacity
+                                    
+                                    try? moc.save()
                                     carDelete = newCar
-                                    cars.append(newCar)
                                     // Updates the selected car's information and adds the new car to the dropdown menu as selected
                                     updateInformation(newTitle: addManufacturer, newManufacturer: addManufacturer, newModel: addModel, newCapacity: addCapacity)
                                 })

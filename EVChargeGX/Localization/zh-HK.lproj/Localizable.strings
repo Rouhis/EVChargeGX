@@ -1,0 +1,20 @@
+/* 
+  Localizable.strings
+  EVChargeGX
+
+  Created by iosdev on 22.4.2023.
+  
+*/
+"Search" = "Search";
+
+"Profile" = "Profile";
+
+"Selected car: " = "Selected car: ";
+
+"Manufacturer: " = "Manufacturer:" ;
+
+"Owned connectors" = "Owned connectors";
+
+"Manufacturer" = "Manufacturer";
+
+"Battery capacity(kWh)" = "Battery capacity(kWh)";
