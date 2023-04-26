@@ -69,17 +69,6 @@ struct StationDetailsView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    isPresented = false
-                }, label: {
-                    Text("Close")
-                        .fontWeight(.semibold)
-                        .padding()
-                        .foregroundColor(.white)
-                })
-                .background(Color.gray)
-                .cornerRadius(10)
-                .padding()
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button(action: {

@@ -34,8 +34,8 @@ struct MapView: View {
     )
     @State private var alert = false
     @State private var annotationItems = [AnnotationItem]()
-    @State private var stationName = ""
-    @State private var chargerType = ""
+    @State private var stationName: String = ""
+    @State private var chargerType: String = ""
     @State private var chargerPower: Double = 0
     @State private var sheetIsPresented = false
     @State private var stationLatitude: Double = 0
