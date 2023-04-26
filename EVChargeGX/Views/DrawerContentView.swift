@@ -7,27 +7,26 @@
 import SwiftUI
 
 
-extension StationData {
 
+
+extension AnnotationItem{
+    
 }
 
 
-
 struct StationsListView: View {
-    @StateObject fileprivate var viewModel = stationViewModel()
-    var body: some  View {
-        VStack{
-            List(viewModel.stations){StationData in
-                drawerItem(stationName: StationData.name, stationAddress: StationData.address)
-                
-                
-            }.listStyle(.plain).padding(-5)
-            
-                .task{
-                    await viewModel.fetchData()
+    var items: [AnnotationItem]
+    var body: some View {
+        VStack {
+            if items.isEmpty {
+                Text("No stations found")
+            } else {
+                List(items) { annotationItem in
+                    drawerItem(stationName: annotationItem.title, stationAddress: annotationItem.address)
                 }
-            
-            
+                .listStyle(.plain)
+                .padding(-5)
+            }
         }
     }
 }

@@ -9,9 +9,13 @@ import CoreData
 import Drawer
 
 
+
 struct ContentView: View {
     @State private var isShowingStations = false
     @State var heights = [CGFloat(110),CGFloat(750)]
+    
+  //  @State var annotations = annotationItems(items: [])
+
     //  @State private var transcript = ""
     // @State private var isRecording = false
     // @State private var alert = false
@@ -24,8 +28,9 @@ struct ContentView: View {
         
         ZStack{
             MapView()
-
+/*
                 Drawer(heights: $heights) {
+                    
                     ZStack{
                         Color(.systemBackground)
                         VStack{
@@ -33,13 +38,14 @@ struct ContentView: View {
                                 .background(Color.white)
                                 .padding(10)
                             
-                            StationsListView()
+                       //     AnnotationsListView(items: annotations)
+                         //   StationsListView()
                             Spacer()
                         }
                     }
                 }
                 .edgesIgnoringSafeArea(.vertical)
-            
+  */
             .toolbar{
                 NavigationLink(destination: ProfileView(), label: {
                     Image(systemName: "person.circle")

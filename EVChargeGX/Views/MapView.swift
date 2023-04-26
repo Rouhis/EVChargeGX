@@ -5,11 +5,13 @@
 //
 import MapKit
 import SwiftUI
+import Drawer
 
 struct AnnotationItem: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
     let title: String
+    let address: String
     let Connections : [Connections]
 }
 
@@ -40,6 +42,8 @@ struct MapView: View {
     @State private var stationLongitude: Double = 0
     
     @State private var speechTranscript = ""
+    @State var heights = [CGFloat(110),CGFloat(750)]
+
 
 
     struct TextFielButton: ViewModifier{
@@ -166,9 +170,10 @@ struct MapView: View {
                         for item in result{
                             let annotationItem = AnnotationItem(
                                 coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
-                                title: item.AddressInfo.Title,
+                                title: item.AddressInfo.Title, address: item.AddressInfo.AddressLine1,
                                 Connections: item.Connections
                             )
+                            let stationItem = StationData(name: item.AddressInfo.Title, address: item.AddressInfo.AddressLine1, latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude)
                             annotationItems.append(annotationItem)
                             print(item.AddressInfo.Title)
                         }
@@ -176,7 +181,24 @@ struct MapView: View {
                 }
             }
         }
-        
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+           
+            Drawer(heights: $heights) {
+                
+                ZStack{
+                    Color(.systemBackground)
+                    VStack{
+                        RoundedRectangle(cornerRadius: 20).frame(width: 60, height: 5, alignment: .center)
+                            .background(Color.white)
+                            .padding(10)
+                        
+                        //AnnotationsListView(items: annotationItems)
+                        
+                        StationsListView(items: annotationItems)
+                        Spacer()
+                    }
+                }
+            }.edgesIgnoringSafeArea(.vertical)
     }
         .edgesIgnoringSafeArea(.all)
         .onAppear {
@@ -194,7 +216,7 @@ struct MapView: View {
                         for (_, item) in result.enumerated() {
                             let annotationItem = AnnotationItem(
                                 coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
-                                title: item.AddressInfo.Title,
+                                title: item.AddressInfo.Title, address: item.AddressInfo.AddressLine1,
                                 Connections: item.Connections
                             )
                             annotationItems.append(annotationItem)

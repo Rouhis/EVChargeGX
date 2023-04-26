@@ -13,7 +13,7 @@ class stationViewModel: ObservableObject {
     @Published var stations = [StationData]()
     @Published var fetching = false
     
-    @MainActor
+ /*   @MainActor
     func fetchData() async {
         fetching = true
         
@@ -33,5 +33,5 @@ class stationViewModel: ObservableObject {
                 }
             }
         }
-    }
+    }*/
 }
