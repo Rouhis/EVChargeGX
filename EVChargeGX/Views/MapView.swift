@@ -42,7 +42,7 @@ struct MapView: View {
     @State private var stationLongitude: Double = 0
     
     @State private var speechTranscript = ""
-    @State var heights = [CGFloat(110),CGFloat(750)]
+    @State var heights = [CGFloat(110),CGFloat(600)]
 
 
 
@@ -173,7 +173,7 @@ struct MapView: View {
                                 title: item.AddressInfo.Title, address: item.AddressInfo.AddressLine1,
                                 Connections: item.Connections
                             )
-                            let stationItem = StationData(name: item.AddressInfo.Title, address: item.AddressInfo.AddressLine1, latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude)
+
                             annotationItems.append(annotationItem)
                             print(item.AddressInfo.Title)
                         }
