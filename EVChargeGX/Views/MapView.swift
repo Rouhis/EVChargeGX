@@ -198,7 +198,7 @@ struct MapView: View {
                         Spacer()
                     }
                 }
-            }.edgesIgnoringSafeArea(.vertical)
+            }.edgesIgnoringSafeArea(.vertical).zIndex(2)
     }
         .edgesIgnoringSafeArea(.all)
         .onAppear {
