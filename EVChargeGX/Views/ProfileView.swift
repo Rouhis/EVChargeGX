@@ -64,73 +64,93 @@ struct ProfileView: View {
                     }
                 }
                 List {
-                    VStack() {
+                    VStack {
                         HStack {
                             Menu {
-                                // Goes through the Car objects in the cars array and adds the objects to a picker
                                 ForEach(cars) { car in
-                                    Button("\(car.manufacturer ?? "")", action: {
+                                    Button("\(car.manufacturer ?? "")") {
                                         print("count: ", cars.count)
-                                        // Adds the selected Car object's data to the variables that are used to show the selected car's data
-                                        updateInformation(newTitle: car.manufacturer ?? "", newManufacturer: car.manufacturer ?? "", newModel: car.model ?? "", newCapacity: car.batteryCapacity ?? "")
+                                        updateInformation(
+                                            newTitle: car.manufacturer ?? "",
+                                            newManufacturer: car.manufacturer ?? "",
+                                            newModel: car.model ?? "",
+                                            newCapacity: car.batteryCapacity ?? ""
+                                        )
                                         carDelete = car
-                                    })
+                                    }
                                 }
                             } label: {
                                 HStack {
-                                    Text("Selected car: ")
-                                        .foregroundColor(.black)
+                                    Text("Selected car:")
+                                    .foregroundColor(.secondary)
                                     if manufacturerTitle.isEmpty {
                                         Text("No cars")
+                                            .foregroundColor(.secondary)
                                     } else {
                                         Text("\(manufacturerTitle)")
+                                            .foregroundColor(.primary)
                                     }
                                     if !cars.isEmpty {
-                                        Image(systemName: "arrow.down.app")
+                                        Image(systemName: "arrowtriangle.down.fill")
+                                            .foregroundColor(.primary)
                                     }
                                 }
                             }.id(UUID())
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            
                             if !cars.isEmpty {
                                 Button(action: {
                                     print("Car count before delete", cars.count)
-                                        moc.delete(carDelete)
+                                    moc.delete(carDelete)
                                     try? moc.save()
                                     print("Car count after delete", cars.count)
                                     if !cars.isEmpty {
                                         let carCount = cars.count - 1
-                                        updateInformation(newTitle: cars[carCount].manufacturer ?? "", newManufacturer: cars[carCount].manufacturer ?? "", newModel: cars[carCount].model ?? "", newCapacity: cars[carCount].batteryCapacity ?? "")
+                                        updateInformation(
+                                            newTitle: cars[carCount].manufacturer ?? "",
+                                            newManufacturer: cars[carCount].manufacturer ?? "",
+                                            newModel: cars[carCount].model ?? "",
+                                            newCapacity: cars[carCount].batteryCapacity ?? ""
+                                        )
                                         carDelete = cars[carCount]
                                     } else {
                                         updateInformation(newTitle: "", newManufacturer: "", newModel: "", newCapacity: "")
                                     }
                                 }) {
-                                    Image(systemName: "trash")
-                                }.buttonStyle(BorderlessButtonStyle())
+                                    Image(systemName: "trash.fill")
+                                        .foregroundColor(.red)
+                                }
+                                .padding(.leading, 10)
                             }
-                        }.padding(.bottom, 10)
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(10)
+                        .padding(.horizontal, 20)
                         
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 10) {
                             HStack {
                                 Text("Manufacturer:")
+                                    .foregroundColor(.secondary)
                                 Text("\(manufacturer)")
                             }
-                            .padding(.bottom, 5)
                             HStack {
                                 Text("Model:")
+                                    .foregroundColor(.secondary)
                                 Text("\(model)")
                             }
-                            .padding(.bottom, 5)
                             HStack {
                                 Text("Battery capacity(kWh):")
+                                    .foregroundColor(.secondary)
                                 Text("\(capacity)")
+                        
                             }
-
                         }
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .padding(.bottom, 10)
                     }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .listRowSeparator(.hidden)
-                    
                     VStack {
                         HStack {
                             Text("Owned connectors")
@@ -163,16 +183,23 @@ struct ProfileView: View {
                                 addCapacity = ""
                             }) {
                                 HStack {
+                                    Image(systemName: "plus.circle.fill")
+                                        .foregroundColor(.green)
                                     Text("Add a new car")
                                         .foregroundColor(.black)
                                 }
-                            }.alert("Add a new car", isPresented: $alertAddCar) {
+                            }
+                            .frame(maxWidth: .infinity, minHeight: 50)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(8)
+                            .padding()
+                            .alert("Add a new car", isPresented: $alertAddCar) {
                                 TextField("Manufacturer", text: $addManufacturer)
                                 TextField("Model", text: $addModel)
-                                TextField("Battery capacity(kWh)", text: $addCapacity)
+                                TextField("Battery capacity (kWh)", text: $addCapacity).keyboardType(.numberPad)
                                 
-                                Button("Cancel", action: {})
-                                Button("Save", action: {
+                                Button("Cancel", role: .cancel) {}
+                                Button("Save", role: .destructive) {
                                     // Creates a new Car object, adds it to the cars array
                                     let newCar = Car(context: moc)
                                     newCar.manufacturer = addManufacturer
@@ -183,10 +210,9 @@ struct ProfileView: View {
                                     carDelete = newCar
                                     // Updates the selected car's information and adds the new car to the dropdown menu as selected
                                     updateInformation(newTitle: addManufacturer, newManufacturer: addManufacturer, newModel: addModel, newCapacity: addCapacity)
-                                })
+                                }
                             }
-                            .frame(width: 175, height: 50)
-                            .background(.green)
+
                         }
                         .buttonStyle(BorderlessButtonStyle())
                         .padding()
