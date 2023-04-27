@@ -173,19 +173,21 @@ struct MapView: View {
                                 Connections: item.Connections
                             )
                             let test = item.Connections[0].ConnectionType?.Title ?? ""
-                            print(":DDD", test, type2, ccs, chademo)
-                                if type2 && test.contains("Type 2") {
-                                    print(":lll", "Type 2 toimii", type2)
-                                    annotationItems.append(annotationItem)
-                                } else if ccs && test.contains("CCS") {
-                                    print(":lll", "ccs toimii", ccs)
-                                    annotationItems.append(annotationItem)
-                                } else if chademo && test.contains("CHAdeMO") {
-                                    print(":lll","chademo toimii", chademo)
-                                    annotationItems.append(annotationItem)
-                                } else {
-                                    print(":ppp", "No stations with connectors")
-                                }
+                            if !test.isEmpty {
+                                print(":DDD", test, type2, ccs, chademo)
+                                    if type2 && test.contains("Type 2") {
+                                        print(":lll", "Type 2 toimii", type2)
+                                        annotationItems.append(annotationItem)
+                                    } else if ccs && test.contains("CCS") {
+                                        print(":lll", "ccs toimii", ccs)
+                                        annotationItems.append(annotationItem)
+                                    } else if chademo && test.contains("CHAdeMO") {
+                                        print(":lll","chademo toimii", chademo)
+                                        annotationItems.append(annotationItem)
+                                    } else {
+                                        print(":ppp", "No stations with connectors")
+                                    }
+                            }
                             print(item.AddressInfo.Title)
                         }
                     }
