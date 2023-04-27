@@ -95,7 +95,8 @@ struct ProfileView: View {
                                             .foregroundColor(.primary)
                                     }
                                 }
-                            }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                            }.id(UUID())
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                             
                             if !cars.isEmpty {
                                 Button(action: {
@@ -143,6 +144,7 @@ struct ProfileView: View {
                                 Text("Battery capacity(kWh):")
                                     .foregroundColor(.secondary)
                                 Text("\(capacity)")
+                        
                             }
                         }
                         .padding(.horizontal, 20)
@@ -194,7 +196,7 @@ struct ProfileView: View {
                             .alert("Add a new car", isPresented: $alertAddCar) {
                                 TextField("Manufacturer", text: $addManufacturer)
                                 TextField("Model", text: $addModel)
-                                TextField("Battery capacity (kWh)", text: $addCapacity)
+                                TextField("Battery capacity (kWh)", text: $addCapacity).keyboardType(.numberPad)
                                 
                                 Button("Cancel", role: .cancel) {}
                                 Button("Save", role: .destructive) {
