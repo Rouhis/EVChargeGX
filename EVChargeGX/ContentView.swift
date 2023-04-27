@@ -39,19 +39,6 @@ struct ContentView: View {
                     }
                 }
                 .edgesIgnoringSafeArea(.vertical)
-            
-            .toolbar{
-                NavigationLink(destination: ProfileView(), label: {
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.blue)
-                    
-                }).simultaneousGesture(TapGesture().onEnded{
-                    
-                    
-                })
-            }
         }.edgesIgnoringSafeArea(.vertical)
     }
 }

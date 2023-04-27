@@ -89,105 +89,156 @@ struct MapView: View {
     }
     
     var body: some View {
-        ZStack {
-            TextField("Search", text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery, speechTranscript: $speechTranscript)).onChange(of: speechTranscript){ newValue in
-                searchQuery = newValue
-                search()}
-                            .padding()
-                            .background(Color(.systemGray5))
-                            .cornerRadius(10)
-                            .padding(.horizontal)
-                            .padding(.bottom, 600)
-                            .zIndex(1)
-            Menu {
-                Toggle(isOn: $filterByConnectors) {
-                    Text("Filter by owned connectors")
-                }
-            } label: {
-                Image(systemName: "line.horizontal.3")
-            }
-            .padding(.leading, 320)
-            .padding(.bottom, 500)
-            .font(.system(size: 24, design: .default))
-            .zIndex(1)
-            
-            Button(action: {
-                if let userLocation = getUserLocation(manager: locationManager) {
-                       region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-                   }
-            }, label: {
-                Image(systemName: "location.fill")
-                    .padding()
-                    .background(Color.white)
-                    .clipShape(Circle())
-            })
-            .padding(.top, 500.0)
-            .padding(.leading, 300)
-            .frame(width: nil)
-            .zIndex(1)
-            
-            
-            Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: annotationItems)
-            { annotation in
-                MapAnnotation(coordinate: annotation.coordinate) {
-                    
-                    VStack {
+        NavigationStack{
+            ZStack {
+                TextField("Search", text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery, speechTranscript: $speechTranscript)).onChange(of: speechTranscript){ newValue in
+                    searchQuery = newValue
+                    search()}
+                .padding()
+                .background(Color(.systemGray5))
+                .cornerRadius(10)
+                .padding(.horizontal)
+                .padding(.bottom, 600)
+                .zIndex(1)
+                
+                Button(action: {
+                    if let userLocation = getUserLocation(manager: locationManager) {
+                        region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+                    }
+                }, label: {
+                    Image(systemName: "location.fill")
+                        .padding()
+                        .background(Color.white)
+                        .clipShape(Circle())
+                })
+                .padding(.top, 500.0)
+                .padding(.leading, 300)
+                .frame(width: nil)
+                .zIndex(1)
+                
+                
+                Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: annotationItems)
+                { annotation in
+                    MapAnnotation(coordinate: annotation.coordinate) {
                         
-                        Image(systemName: "bolt.fill")
-                            .resizable()
-                            .foregroundColor(.white)
-                            .frame(width: 20, height: 30)
-                            .background(
-                                Circle()
-                                    .fill(Color.blue)
-                                    .frame(width: 30, height: 30)
-                            )
-                        Circle()
-                            .fill(Color.red)
-                            .frame(width: 8, height: 8)
+                        VStack {
+                            
+                            Image(systemName: "bolt.fill")
+                                .resizable()
+                                .foregroundColor(.white)
+                                .frame(width: 20, height: 30)
+                                .background(
+                                    Circle()
+                                        .fill(Color.blue)
+                                        .frame(width: 30, height: 30)
+                                )
+                            Circle()
+                                .fill(Color.red)
+                                .frame(width: 8, height: 8)
+                        }
+                        .frame(width: 60, height: 60)
+                        .cornerRadius(10)
+                        .shadow(radius: 3)
+                        .onTapGesture {
+                            print(annotation.title)
+                            stationName = annotation.title
+                            chargerType = annotation.Connections.first?.ConnectionType?.Title ?? ""
+                            chargerPower = annotation.Connections.first?.PowerKW ?? 0
+                            stationLatitude = annotation.coordinate.latitude
+                            stationLongitude = annotation.coordinate.longitude
+                            
+                            sheetIsPresented = true
+                        }
+                        .sheet(isPresented: $sheetIsPresented) {
+                            StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, isPresented: $sheetIsPresented)
+                        }
+                        .onDisappear {
+                            annotationItems.removeAll()
+                        }
                     }
-                    .frame(width: 60, height: 60)
-                    .cornerRadius(10)
-                    .shadow(radius: 3)
-                    .onTapGesture {
-                        print(annotation.title)
-                        stationName = annotation.title
-                        chargerType = annotation.Connections.first?.ConnectionType?.Title ?? ""
-                        chargerPower = annotation.Connections.first?.PowerKW ?? 0
-                        stationLatitude = annotation.coordinate.latitude
-                        stationLongitude = annotation.coordinate.longitude
-                        
-                        sheetIsPresented = true
-                    }
-                    .sheet(isPresented: $sheetIsPresented) {
-                        StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, isPresented: $sheetIsPresented)
-                    }
-                .onDisappear {
+                    //This onChange is responsible for changes on the map
+                }.onChange(of: region.center.latitude) { _ in
+                    // Remove old annotations
                     annotationItems.removeAll()
+                    
+                    // Debounce the API call by 0.5 seconds
+                    regionDebouncer.debounce {
+                        // Call the API with the new region coordinates
+                        callApi(latitude: region.center.latitude, longitude: region.center.longitude) { result, error in
+                            if let error = error {
+                                print("Error decoding JSON: \(error)")
+                            } else if let result = result {
+                                // Add new annotations
+                                for item in result{
+                                    let annotationItem = AnnotationItem(
+                                        coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
+                                        title: item.AddressInfo.Title,
+                                        Connections: item.Connections
+                                    )
+                                    let test = item.Connections[0].ConnectionType?.Title ?? ""
+                                    if !test.isEmpty && filterByConnectors {
+                                        print(":DDD", test, type2, ccs, chademo)
+                                        if type2 && test.contains("Type 2") {
+                                            print(":lll", "Type 2 toimii", type2)
+                                            annotationItems.append(annotationItem)
+                                        } else if ccs && test.contains("CCS") {
+                                            print(":lll", "ccs toimii", ccs)
+                                            annotationItems.append(annotationItem)
+                                        } else if chademo && test.contains("CHAdeMO") {
+                                            print(":lll","chademo toimii", chademo)
+                                            annotationItems.append(annotationItem)
+                                        } else {
+                                            print(":ppp", "No stations with connectors")
+                                        }
+                                    } else {
+                                        annotationItems.append(annotationItem)
+                                    }
+                                    print(item.AddressInfo.Title)
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }.toolbar{
+                Menu {
+                    NavigationLink(destination: ProfileView(), label: {
+                        Text("Profile")
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.blue)
+                        
+                    })
+                    Toggle(isOn: $filterByConnectors) {
+                        Text("Filter by owned connectors")
+                    }
+                } label: {
+                    Image(systemName: "line.horizontal.3")
                 }
             }
-            //This onChange is responsible for changes on the map
-        }.onChange(of: region.center.latitude) { _ in
-            // Remove old annotations
-            annotationItems.removeAll()
-            
-            // Debounce the API call by 0.5 seconds
-            regionDebouncer.debounce {
-                // Call the API with the new region coordinates
-                callApi(latitude: region.center.latitude, longitude: region.center.longitude) { result, error in
-                    if let error = error {
-                        print("Error decoding JSON: \(error)")
-                    } else if let result = result {
-                        // Add new annotations
-                        for item in result{
-                            let annotationItem = AnnotationItem(
-                                coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
-                                title: item.AddressInfo.Title,
-                                Connections: item.Connections
-                            )
-                            let test = item.Connections[0].ConnectionType?.Title ?? ""
-                            if !test.isEmpty && filterByConnectors {
-                                print(":DDD", test, type2, ccs, chademo)
+            .edgesIgnoringSafeArea(.all)
+            .onAppear {
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.distanceFilter = kCLDistanceFilterNone
+                locationManager.startUpdatingLocation()
+                if let userLocation = locationManager.location?.coordinate {
+                    region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+                    
+                    callApi(latitude: userLocation.latitude, longitude: userLocation.longitude) { result, error in
+                        if let error = error {
+                            print("Error decoding JSON: \(error)")
+                        } else if let result = result {
+                            // Do something with the array of objects here
+                            for (_, item) in result.enumerated() {
+                                let annotationItem = AnnotationItem(
+                                    coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
+                                    title: item.AddressInfo.Title,
+                                    Connections: item.Connections
+                                )
+                                let test = item.Connections[0].ConnectionType?.Title ?? ""
+                                if !test.isEmpty && filterByConnectors {
+                                    print(":DDD", test, type2, ccs, chademo)
                                     if type2 && test.contains("Type 2") {
                                         print(":lll", "Type 2 toimii", type2)
                                         annotationItems.append(annotationItem)
@@ -200,63 +251,18 @@ struct MapView: View {
                                     } else {
                                         print(":ppp", "No stations with connectors")
                                     }
-                            } else {
-                                annotationItems.append(annotationItem)
-                            }
-                            print(item.AddressInfo.Title)
-                        }
-                    }
-                }
-            }
-        }
-        
-    }
-        .edgesIgnoringSafeArea(.all)
-        .onAppear {
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.distanceFilter = kCLDistanceFilterNone
-            locationManager.startUpdatingLocation()
-            if let userLocation = locationManager.location?.coordinate {
-                region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-                
-                callApi(latitude: userLocation.latitude, longitude: userLocation.longitude) { result, error in
-                    if let error = error {
-                        print("Error decoding JSON: \(error)")
-                    } else if let result = result {
-                        // Do something with the array of objects here
-                        for (_, item) in result.enumerated() {
-                            let annotationItem = AnnotationItem(
-                                coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
-                                title: item.AddressInfo.Title,
-                                Connections: item.Connections
-                            )
-                            let test = item.Connections[0].ConnectionType?.Title ?? ""
-                            if !test.isEmpty && filterByConnectors {
-                                print(":DDD", test, type2, ccs, chademo)
-                                if type2 && test.contains("Type 2") {
-                                    print(":lll", "Type 2 toimii", type2)
-                                    annotationItems.append(annotationItem)
-                                } else if ccs && test.contains("CCS") {
-                                    print(":lll", "ccs toimii", ccs)
-                                    annotationItems.append(annotationItem)
-                                } else if chademo && test.contains("CHAdeMO") {
-                                    print(":lll","chademo toimii", chademo)
-                                    annotationItems.append(annotationItem)
                                 } else {
-                                    print(":ppp", "No stations with connectors")
+                                    annotationItems.append(annotationItem)
                                 }
-                            } else {
-                                annotationItems.append(annotationItem)
+                                print(item.AddressInfo.Title)
+                                
                             }
-                            print(item.AddressInfo.Title)
-                            
                         }
                     }
                 }
             }
-        }
-    
-}
+            
+        }}
 //Search function for the searchbar
 func search() {
     let query = searchQuery.isEmpty ? speechTranscript : searchQuery
