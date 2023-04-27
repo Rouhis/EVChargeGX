@@ -40,7 +40,7 @@ struct ProfileView: View {
     
     var body: some View {
         ZStack {
-            Color(red: 205/255, green: 205/255, blue: 205/255)
+            Color(.white)
                 .ignoresSafeArea()
             VStack {
                 VStack(alignment: .leading) {
