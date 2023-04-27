@@ -44,6 +44,8 @@ struct MapView: View {
     @AppStorage("type2") var type2 = UserDefaults.standard.bool(forKey: "type2")
     @AppStorage("ccs") var ccs = UserDefaults.standard.bool(forKey: "ccs")
     @AppStorage("chademo") var chademo = UserDefaults.standard.bool(forKey: "chademo")
+    @AppStorage("filterByStations") var filterByStations = false
+    @AppStorage("filterByConnectors") var filterByConnectors = false
     
     struct TextFielButton: ViewModifier{
         @State private var alert = false
@@ -97,6 +99,17 @@ struct MapView: View {
                             .padding(.horizontal)
                             .padding(.bottom, 600)
                             .zIndex(1)
+            Menu {
+                Toggle(isOn: $filterByConnectors) {
+                    Text("Filter by owned connectors")
+                }
+            } label: {
+                Image(systemName: "line.horizontal.3")
+            }
+            .padding(.leading, 320)
+            .padding(.bottom, 500)
+            .font(.system(size: 24, design: .default))
+            .zIndex(1)
             
             Button(action: {
                 if let userLocation = getUserLocation(manager: locationManager) {
@@ -173,7 +186,7 @@ struct MapView: View {
                                 Connections: item.Connections
                             )
                             let test = item.Connections[0].ConnectionType?.Title ?? ""
-                            if !test.isEmpty {
+                            if !test.isEmpty && filterByConnectors {
                                 print(":DDD", test, type2, ccs, chademo)
                                     if type2 && test.contains("Type 2") {
                                         print(":lll", "Type 2 toimii", type2)
@@ -187,6 +200,8 @@ struct MapView: View {
                                     } else {
                                         print(":ppp", "No stations with connectors")
                                     }
+                            } else {
+                                annotationItems.append(annotationItem)
                             }
                             print(item.AddressInfo.Title)
                         }
@@ -216,7 +231,8 @@ struct MapView: View {
                                 Connections: item.Connections
                             )
                             let test = item.Connections[0].ConnectionType?.Title ?? ""
-                            print(":DDD", test, type2, ccs, chademo)
+                            if !test.isEmpty && filterByConnectors {
+                                print(":DDD", test, type2, ccs, chademo)
                                 if type2 && test.contains("Type 2") {
                                     print(":lll", "Type 2 toimii", type2)
                                     annotationItems.append(annotationItem)
@@ -229,6 +245,9 @@ struct MapView: View {
                                 } else {
                                     print(":ppp", "No stations with connectors")
                                 }
+                            } else {
+                                annotationItems.append(annotationItem)
+                            }
                             print(item.AddressInfo.Title)
                             
                         }
