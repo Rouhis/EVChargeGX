@@ -12,9 +12,9 @@ struct FirstView: View {
     @State private var locationManager = CLLocationManager()
     
     // variables stored in Appstorage
-    @AppStorage("manufacturer") var manufacturer = ""
-    @AppStorage("model") var model = ""
-    @AppStorage("capacity") var capacity = ""
+    @AppStorage("firstManufacturer") var manufacturer = ""
+    @AppStorage("firstModel") var model = ""
+    @AppStorage("firstCapacity") var capacity = ""
     @AppStorage("type2") var type2 = false
     @AppStorage("ccs") var ccs = false
     @AppStorage("chademo") var chademo = false
