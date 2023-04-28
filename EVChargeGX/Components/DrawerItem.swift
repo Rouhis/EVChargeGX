@@ -34,6 +34,10 @@ struct drawerItem: View {
         //This makes the entire box clickable not just the text
         .contentShape(Rectangle())
         .onTapGesture{
+            stationRegion = MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: stationLatitude, longitude: stationLongitude),
+                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            )
             sheetIsPresented = true
         }
         .sheet(isPresented: $sheetIsPresented) {
