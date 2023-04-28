@@ -3,6 +3,7 @@
 //
 //  Created by iosdev on 13.4.2023.
 //
+import MapKit
 import SwiftUI
 
 struct drawerItem: View {
@@ -14,6 +15,10 @@ struct drawerItem: View {
     @State var sheetIsPresented = false
     @State var stationLatitude: Double
     @State var stationLongitude: Double
+    @State private var stationRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 0.0, longitude: 24.688388),
+        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+    )
 
     var body: some View {
         HStack {
@@ -32,7 +37,7 @@ struct drawerItem: View {
             sheetIsPresented = true
         }
         .sheet(isPresented: $sheetIsPresented) {
-            StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, isPresented: $sheetIsPresented)
+            StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, region: $stationRegion, isPresented: $sheetIsPresented)
         }
     }
 }

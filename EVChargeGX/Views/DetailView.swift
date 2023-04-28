@@ -17,10 +17,10 @@ struct StationDetailsView: View {
     let chargerPower: Double
     let latitude: Double
     let longitude: Double
+    @Binding var region: MKCoordinateRegion
     @Binding var isPresented: Bool
     
     // Map region
-    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
     
     var body: some View {
         NavigationStack {
@@ -96,12 +96,5 @@ private struct StationAnnotation: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
     let title: String
-}
-
-struct DetailView: View {
-    var body: some View{
-       Text(":D")
-    }
-   
 }
 

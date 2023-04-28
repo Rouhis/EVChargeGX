@@ -32,6 +32,10 @@ struct MapView: View {
         center: CLLocationCoordinate2D(latitude: 60.173767, longitude: 24.688388),
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )
+    @State private var stationRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 0.0, longitude: 24.688388),
+        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+    )
     @State private var alert = false
     @State private var annotationItems = [AnnotationItem]()
     @State private var stationName: String = ""
@@ -144,11 +148,15 @@ struct MapView: View {
                         chargerPower = annotation.Connections.first?.PowerKW ?? 0
                         stationLatitude = annotation.coordinate.latitude
                         stationLongitude = annotation.coordinate.longitude
+                        stationRegion = MKCoordinateRegion(
+                            center: CLLocationCoordinate2D(latitude: stationLatitude, longitude: stationLongitude),
+                            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                        )
                         
                         sheetIsPresented = true
                     }
                     .sheet(isPresented: $sheetIsPresented) {
-                        StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, isPresented: $sheetIsPresented)
+                        StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, region: $stationRegion, isPresented: $sheetIsPresented)
                     }
                 .onDisappear {
                     annotationItems.removeAll()
