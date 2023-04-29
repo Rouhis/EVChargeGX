@@ -17,6 +17,7 @@ struct StationDetailsView: View {
     let chargerPower: Double
     let latitude: Double
     let longitude: Double
+    let stationAddress: String
     @Binding var region: MKCoordinateRegion
     @Binding var isPresented: Bool
     

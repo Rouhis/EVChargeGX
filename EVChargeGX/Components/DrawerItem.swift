@@ -15,6 +15,7 @@ struct drawerItem: View {
     @State var sheetIsPresented = false
     @State var stationLatitude: Double
     @State var stationLongitude: Double
+    @State var stationAddress: String
     @State private var stationRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 0.0, longitude: 24.688388),
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
@@ -25,8 +26,8 @@ struct drawerItem: View {
             VStack(alignment: .leading) {
                 Text("\(String(stationName))")
                     .font(.headline)
-                //Text("\(String(stationAddress))")
-                //   .font(.headline)
+                Text("\(String(stationAddress))")
+                   .font(.headline)
             }.padding(.leading, 10)
             
             Spacer()
@@ -41,7 +42,7 @@ struct drawerItem: View {
             sheetIsPresented = true
         }
         .sheet(isPresented: $sheetIsPresented) {
-            StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, region: $stationRegion, isPresented: $sheetIsPresented)
+            StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, stationAddress: stationAddress, region: $stationRegion, isPresented: $sheetIsPresented)
         }
     }
 }

@@ -11,7 +11,7 @@ struct AnnotationItem: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
     let title: String
-    //let address: String
+    let address: String
     let Connections : [Connections]
 }
 
@@ -44,6 +44,7 @@ struct MapView: View {
     @State private var sheetIsPresented = false
     @State private var stationLatitude: Double = 0
     @State private var stationLongitude: Double = 0
+    @State private var stationAddress: String = ""
     
     @State private var speechTranscript = ""
     @State var heights = [CGFloat(110),CGFloat(600)]
@@ -153,6 +154,7 @@ struct MapView: View {
                             chargerPower = annotation.Connections.first?.PowerKW ?? 0
                             stationLatitude = annotation.coordinate.latitude
                             stationLongitude = annotation.coordinate.longitude
+                            stationAddress = annotation.address
                             stationRegion = MKCoordinateRegion(
                                 center: CLLocationCoordinate2D(latitude: stationLatitude, longitude: stationLongitude),
                                 span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
@@ -161,7 +163,7 @@ struct MapView: View {
                             sheetIsPresented = true
                         }
                         .sheet(isPresented: $sheetIsPresented) {
-                            StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, region: $stationRegion, isPresented: $sheetIsPresented)
+                            StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, stationAddress: stationAddress , region: $stationRegion, isPresented: $sheetIsPresented)
                         }
                         .onDisappear {
                             annotationItems.removeAll()
@@ -184,6 +186,7 @@ struct MapView: View {
                                     let annotationItem = AnnotationItem(
                                         coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
                                         title: item.AddressInfo.Title,
+                                        address: item.AddressInfo.AddressLine1,
                                         Connections: item.Connections
                                         
                                     )
@@ -265,6 +268,7 @@ struct MapView: View {
                                 let annotationItem = AnnotationItem(
                                     coordinate: CLLocationCoordinate2D(latitude: item.AddressInfo.Latitude, longitude: item.AddressInfo.Longitude),
                                     title: item.AddressInfo.Title,
+                                    address: item.AddressInfo.AddressLine1,
                                     Connections: item.Connections
                                 )
                                 let test = item.Connections[0].ConnectionType?.Title ?? ""
