@@ -152,7 +152,6 @@
 				6A2F07E329EC693400E2313A /* Components */,
 				6A2F07E229EC692000E2313A /* Views */,
 				6A2F07B229EC68EA00E2313A /* EVChargeGXApp.swift */,
-				6A2F07B429EC68EA00E2313A /* ContentView.swift */,
 				6A2F07B629EC68ED00E2313A /* Assets.xcassets */,
 				6A2F07C029EC68ED00E2313A /* Info.plist */,
 				6A2F07BD29EC68ED00E2313A /* EVChargeGX.xcdatamodeld */,
@@ -190,6 +189,7 @@
 		6A2F07E229EC692000E2313A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6A2F07B429EC68EA00E2313A /* ContentView.swift */,
 				6A2F07F429EC6A8F00E2313A /* FirstView.swift */,
 				6A2F07F629EC6AAA00E2313A /* MapView.swift */,
 				6A2F07F829EC6AD600E2313A /* ProfileView.swift */,

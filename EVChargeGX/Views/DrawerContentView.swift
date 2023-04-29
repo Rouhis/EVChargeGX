@@ -15,7 +15,7 @@ struct StationsListView: View {
                 Text("No stations found")
             } else {
                 List(items) { annotationItem in
-                    drawerItem(stationName: annotationItem.title, stationAddress: annotationItem.address, chargerType: annotationItem.Connections.first?.ConnectionType?.Title ?? "",
+                    drawerItem(stationName: annotationItem.title,/* stationAddress: annotationItem.address,*/ chargerType: annotationItem.Connections.first?.ConnectionType?.Title ?? "",
                                chargerPower: annotationItem.Connections.first?.PowerKW ?? 0,
                                stationLatitude: annotationItem.coordinate.latitude,
                                stationLongitude: annotationItem.coordinate.longitude)

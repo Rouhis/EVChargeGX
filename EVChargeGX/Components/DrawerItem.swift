@@ -9,7 +9,7 @@ import SwiftUI
 struct drawerItem: View {
     
     @State var stationName: String
-    @State var stationAddress: String
+    //@State var stationAddress: String
     @State var chargerType: String
     @State var chargerPower: Double
     @State var sheetIsPresented = false
@@ -25,8 +25,8 @@ struct drawerItem: View {
             VStack(alignment: .leading) {
                 Text("\(String(stationName))")
                     .font(.headline)
-                Text("\(String(stationAddress))")
-                    .font(.headline)
+                //Text("\(String(stationAddress))")
+                //   .font(.headline)
             }.padding(.leading, 10)
             
             Spacer()
