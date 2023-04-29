@@ -243,9 +243,16 @@ struct MapView: View {
                         })
                         Toggle(isOn: $filterByConnectors) {
                             Text("Filter by owned connectors")
+                            Image(systemName: "eraser")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.blue)
                         }
                     } label: {
-                        Image(systemName: "line.horizontal.3")
+                        Image(systemName: "line.3.horizontal.circle.fill")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+
                     }
                 }
                 .edgesIgnoringSafeArea(.vertical).zIndex(2)
