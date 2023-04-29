@@ -296,7 +296,7 @@ struct MapView: View {
 }
 //Search function for the searchbar
 func search() {
-    let query = searchQuery.isEmpty ? speechTranscript : searchQuery
+    _ = searchQuery.isEmpty ? speechTranscript : searchQuery
 
     // Create a CLGeocoder instance to geocode the search query
     let geocoder = CLGeocoder()
