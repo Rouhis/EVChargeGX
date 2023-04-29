@@ -236,17 +236,13 @@ struct MapView: View {
                         NavigationLink(destination: ProfileView(), label: {
                             Text("Profile")
                             Image(systemName: "person.circle")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.blue)
+
                             
                         })
                         Toggle(isOn: $filterByConnectors) {
                             Text("Filter by owned connectors")
                             Image(systemName: "eraser")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.blue)
+        
                         }
                     } label: {
                         Image(systemName: "line.3.horizontal.circle.fill")
