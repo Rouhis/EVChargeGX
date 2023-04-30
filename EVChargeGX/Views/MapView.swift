@@ -249,7 +249,6 @@ struct MapView: View {
                         Image(systemName: "line.3.horizontal.circle.fill")
                             .resizable()
                             .frame(width: 30, height: 30)
-                            .foregroundColor(.white)
 
                     }
                 }
