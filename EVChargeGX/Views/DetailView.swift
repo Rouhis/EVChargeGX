@@ -12,12 +12,12 @@ import MapKit
 
 struct StationDetailsView: View {
     //These values are passed from mapview to here
-    let stationName: String
-    let chargerType: String
-    let chargerPower: Double
+    let stationName: String = UserDefaults.standard.string(forKey: "stationName") ?? ""
+    let chargerType: String = UserDefaults.standard.string(forKey: "chargerType") ?? ""
+    let chargerPower: Double = UserDefaults.standard.double(forKey: "chargerPower")
     let latitude: Double
     let longitude: Double
-    let stationAddress: String
+    let stationAddress: String = UserDefaults.standard.string(forKey: "stationAddress") ?? ""
     @Binding var region: MKCoordinateRegion
     @Binding var isPresented: Bool
     

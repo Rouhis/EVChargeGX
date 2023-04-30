@@ -20,6 +20,10 @@ struct drawerItem: View {
         center: CLLocationCoordinate2D(latitude: 0.0, longitude: 24.688388),
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )
+    @AppStorage("stationName") var station = (UserDefaults.standard.string(forKey: "stationName") ?? "")
+    @AppStorage("chargerType") var charger = (UserDefaults.standard.string(forKey: "chargerType") ?? "")
+    @AppStorage("chargerPower") var power = UserDefaults.standard.double(forKey: "chargerPower")
+    @AppStorage("stationAddress") var address = (UserDefaults.standard.string(forKey: "stationAddress") ?? "")
 
     var body: some View {
         HStack {
@@ -39,10 +43,14 @@ struct drawerItem: View {
                 center: CLLocationCoordinate2D(latitude: stationLatitude, longitude: stationLongitude),
                 span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             )
+            station = stationName
+            charger = chargerType
+            power = chargerPower
+            address = stationAddress
             sheetIsPresented = true
         }
         .sheet(isPresented: $sheetIsPresented) {
-            StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, stationAddress: stationAddress, region: $stationRegion, isPresented: $sheetIsPresented)
+            StationDetailsView(latitude: stationLatitude,longitude: stationLongitude, region: $stationRegion, isPresented: $sheetIsPresented)
         }
     }
 }

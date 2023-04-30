@@ -39,13 +39,13 @@ struct MapView: View {
     )
     @State private var alert = false
     @State private var annotationItems = [AnnotationItem]()
-    @State private var stationName: String = ""
-    @State private var chargerType: String = ""
-    @State private var chargerPower: Double = 0
+    @AppStorage("stationName") var stationName: String = ""
+    @AppStorage("chargerType") var chargerType: String = ""
+    @AppStorage("chargerPower") var chargerPower: Double = 0
     @State private var sheetIsPresented = false
     @State private var stationLatitude: Double = 0
     @State private var stationLongitude: Double = 0
-    @State private var stationAddress: String = ""
+    @AppStorage("stationAddress") var stationAddress: String = ""
     
     @State private var speechTranscript = ""
     @State var heights = [CGFloat(110),CGFloat(600)]
@@ -164,7 +164,7 @@ struct MapView: View {
                             sheetIsPresented = true
                         }
                         .sheet(isPresented: $sheetIsPresented) {
-                            StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, stationAddress: stationAddress , region: $stationRegion, isPresented: $sheetIsPresented)
+                            StationDetailsView(latitude: stationLatitude,longitude: stationLongitude, region: $stationRegion, isPresented: $sheetIsPresented)
                         }
                         .onDisappear {
                             annotationItems.removeAll()
