@@ -44,7 +44,7 @@ struct FirstView: View {
                         Section(header: Text("Vehicle information")) {
                             TextField("Manufacturer", text: $manufacturer)
                             TextField("Model", text: $model)
-                            TextField("Battery capacity (kWh)", text: $capacity)
+                            TextField("Battery capacity (kWh)", text: $capacity).keyboardType(.numberPad)
                         }
                         
                         Section(header: Text("Preferred/Owned connector types")) {

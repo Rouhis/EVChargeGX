@@ -18,6 +18,12 @@ struct StationDetailsView: View {
     let latitude: Double
     let longitude: Double
     let stationAddress: String = UserDefaults.standard.string(forKey: "stationAddress") ?? ""
+    let carBattery = UserDefaults.standard.string(forKey: "capacity")
+    @State private var hours: Double = 0.0
+    @State private var totalMinutes = 0
+    @State private var hoursString = ""
+    @State private var minutesString = ""
+    @State private var timeString = ""
     @Binding var region: MKCoordinateRegion
     @Binding var isPresented: Bool
     
@@ -42,6 +48,10 @@ struct StationDetailsView: View {
                         
                         Text(String(format: "%.1f kW", chargerPower))
                             .font(.subheadline)
+                        HStack {
+                            Text("Charging from 0 to 100% takes")
+                            Text("\(timeString)")
+                        }
                     }
                     
                     Spacer()
@@ -70,6 +80,13 @@ struct StationDetailsView: View {
                 
                 Spacer()
                 
+            }.onAppear {
+                hours = (Double(carBattery ?? "") ?? 0.0 ) / chargerPower
+                totalMinutes = Int(hours * 60.0)
+                hoursString = "\(totalMinutes / 60)h"
+                minutesString = String(format: "%02dm", totalMinutes % 60)
+                timeString = "\(hoursString) \(minutesString)"
+                print(":D", timeString)
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button(action: {
