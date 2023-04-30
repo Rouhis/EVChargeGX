@@ -63,7 +63,7 @@ struct FirstView: View {
                     
                     VStack {
                         NavigationLink(
-                            destination: ContentView(),
+                            destination: MapView(),
                             label: {
                                 Text("Done")
                                     .frame(maxWidth: .infinity, minHeight: 44)

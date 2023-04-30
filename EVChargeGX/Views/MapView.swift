@@ -1,4 +1,3 @@
-//  ContentView.swift
 //  EVChargeGX
 //
 //  Created by iosdev on 3.4.2023.

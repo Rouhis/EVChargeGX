@@ -11,6 +11,7 @@ struct StartView: View {
     
     let persistenceController = PersistenceController.shared
     @AppStorage("firstTimeOpen") var firstTimeOpen = true
+    @AppStorage("mapOpen") var mapOpen = false
     
     var body: some View {
         NavigationView {
@@ -18,7 +19,7 @@ struct StartView: View {
                 FirstView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             } else {
-                ContentView()
+                MapView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
         }
