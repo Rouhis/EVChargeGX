@@ -7,6 +7,7 @@ import MapKit
 import SwiftUI
 import Drawer
 
+/*The base used to make items for diffrent views*/
 struct AnnotationItem: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
@@ -314,7 +315,7 @@ func search() {
             // If there is an error, print it to the console
             print("Error geocoding search query: \(error.localizedDescription)")
         } else if let placemark = placemarks?.first {
-            // If the geocoding was successful, get the coordinates of the first placemark
+            // If the geocoding was successful, get the coordinates of the placemark
             let coordinate = placemark.location?.coordinate
             print("Coordinates of \(searchQuery): \(coordinate?.latitude ?? 0), \(coordinate?.longitude ?? 0)")
             
