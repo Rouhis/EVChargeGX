@@ -8,14 +8,14 @@ import SwiftUI
 
 struct drawerItem: View {
     
-    @State var stationName: String
+    @AppStorage("stationName") var stationName: String = ""
     //@State var stationAddress: String
-    @State var chargerType: String
-    @State var chargerPower: Double
+    @AppStorage("chargerType") var chargerType: String = ""
+    @AppStorage("chargerPower") var chargerPower: Double = 0
     @State var sheetIsPresented = false
     @State var stationLatitude: Double
     @State var stationLongitude: Double
-    @State var stationAddress: String
+    @AppStorage("stationAddress") var stationAddress: String = ""
     @State private var stationRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 0.0, longitude: 24.688388),
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
@@ -42,7 +42,7 @@ struct drawerItem: View {
             sheetIsPresented = true
         }
         .sheet(isPresented: $sheetIsPresented) {
-            StationDetailsView(stationName: stationName, chargerType: chargerType, chargerPower: chargerPower,latitude: stationLatitude,longitude: stationLongitude, stationAddress: stationAddress, region: $stationRegion, isPresented: $sheetIsPresented)
+            StationDetailsView(latitude: stationLatitude,longitude: stationLongitude, region: $stationRegion, isPresented: $sheetIsPresented)
         }
     }
 }
