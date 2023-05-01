@@ -48,7 +48,6 @@ struct ProfileView: View {
                         .font(.system(size: 36, design: .default))
                         .padding(.bottom, -15.0)
                 }.onAppear {
-                    let carsCount = cars.count - 1
                     // Creates a new Car object to the CoreData using the data from FirstView, if there are no Car objects previously created.
                     if cars.isEmpty {
                         if !(firstManufacturer ?? "").isEmpty && !(firstModel ?? "").isEmpty && !(firstCapacity ?? "").isEmpty {
