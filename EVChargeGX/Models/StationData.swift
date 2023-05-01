@@ -14,3 +14,4 @@ struct StationData: Identifiable {
     var latitude: Double
     var longitude: Double
 }
+

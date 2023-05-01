@@ -19,6 +19,8 @@ struct StationDetailsView: View {
     let longitude: Double
     let stationAddress: String = UserDefaults.standard.string(forKey: "stationAddress") ?? ""
     let carBattery = UserDefaults.standard.string(forKey: "capacity")
+    
+    // These are used to calculate the time it takes to charge your EV
     @State private var hours: Double = 0.0
     @State private var totalMinutes = 0
     @State private var hoursString = ""
@@ -81,6 +83,7 @@ struct StationDetailsView: View {
                 Spacer()
                 
             }.onAppear {
+                //Calculations for the charge time
                 hours = (Double(carBattery ?? "") ?? 0.0 ) / chargerPower
                 totalMinutes = Int(hours * 60.0)
                 hoursString = "\(totalMinutes / 60)h"
@@ -98,15 +101,23 @@ struct StationDetailsView: View {
         }
         
     }
-    
-    // Helper funciton to open maps
+    // This is a private function that opens the Maps app and displays a location based on its latitude, longitude, and name.
     private func openMaps() {
+        
+        // Create a CLLocationCoordinate2D object using the latitude and longitude values.
         let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        // Create an MKPlacemark object using the coordinates.
         let placemark = MKPlacemark(coordinate: coordinates)
+        
+        // Create an MKMapItem object using the placemark and set its name to the station name.
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = stationName
+        
+        // Launch the Maps app with the specified location.
         mapItem.openInMaps(launchOptions: nil)
     }
+
 }
 
 // Custom annotation for the station

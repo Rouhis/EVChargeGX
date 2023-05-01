@@ -99,6 +99,7 @@ struct MapView: View {
     var body: some View {
         NavigationStack{
             ZStack {
+                //Text field for seaches
                 TextField("Search", text: $searchQuery, onCommit: search).modifier(TextFielButton(serText: $searchQuery, speechTranscript: $speechTranscript)).onChange(of: speechTranscript){ newValue in
                     searchQuery = newValue
                     search()}
@@ -109,6 +110,7 @@ struct MapView: View {
                 .padding(.bottom, 600)
                 .zIndex(1)
                 
+                //Button to center on users location
                 Button(action: {
                     if let userLocation = getUserLocation(manager: locationManager) {
                         region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
@@ -147,8 +149,10 @@ struct MapView: View {
                         .frame(width: 60, height: 60)
                         .cornerRadius(10)
                         .shadow(radius: 3)
+                        
                         .onTapGesture {
                             print(annotation.title)
+                            //Here when the annotation is clicked we set values for the sheet
                             stationName = annotation.title
                             chargerType = annotation.Connections.first?.ConnectionType?.Title ?? ""
                             chargerPower = annotation.Connections.first?.PowerKW ?? 0
@@ -163,6 +167,7 @@ struct MapView: View {
                             sheetIsPresented = true
                         }
                         .sheet(isPresented: $sheetIsPresented) {
+                            //Here we pass the values we just set to the sheet
                             StationDetailsView(latitude: stationLatitude,longitude: stationLongitude, region: $stationRegion, isPresented: $sheetIsPresented)
                         }
                         .onDisappear {
@@ -214,8 +219,7 @@ struct MapView: View {
                         }
                     }
                 }
-                //////////////////////////////////////////////////////////////////////////////////////////////////////
-                
+    
                 Drawer(heights: $heights) {
                     
                     ZStack{
@@ -232,6 +236,7 @@ struct MapView: View {
                         }
                     }
                 }.toolbar{
+                    //Menu
                     Menu {
                         NavigationLink(destination: ProfileView(), label: {
                             Text("Profile")
