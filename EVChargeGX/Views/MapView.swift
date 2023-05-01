@@ -76,7 +76,7 @@ struct MapView: View {
                         speechRecognizer.resetTranscript()
                         speechRecognizer.startTranscribing()
                         isRecording = true
-                    }){Image(systemName: "mic.circle").foregroundColor(Color(UIColor.opaqueSeparator))
+                    }){Image(systemName: "mic.circle").foregroundColor(Color(UIColor.black))
                     }.alert(isPresented: $alert){
                         Alert(title: Text("Recording started"),
                               message: Text("Press 'End' to end recording"),
