@@ -55,6 +55,7 @@ struct MapView: View {
     @AppStorage("filterByStations") var filterByStations = false
     @AppStorage("filterByConnectors") var filterByConnectors = false
 
+    //Adds SpeechRecognition and clear textfield buttons to TextField
     struct TextFielButton: ViewModifier{
         @State private var alert = false
         @StateObject var speechRecognizer = SpeechRecognizer()
@@ -222,7 +223,8 @@ struct MapView: View {
                         }
                     }
                 }
-    
+
+                //Drawer to mapview
                 Drawer(heights: $heights) {
                     
                     ZStack{
@@ -231,9 +233,7 @@ struct MapView: View {
                             RoundedRectangle(cornerRadius: 20).frame(width: 60, height: 5, alignment: .center)
                                 .background(Color.white)
                                 .padding(10)
-                            
-                            //AnnotationsListView(items: annotationItems)
-                            
+                            //Add list to drawer with stations
                             StationsListView(items: annotationItems)
                             Spacer()
                         }

@@ -9,7 +9,6 @@ import SwiftUI
 struct drawerItem: View {
     
     @State var stationName: String
-    //@State var stationAddress: String
     @State var chargerType: String
     @State var chargerPower: Double
     @State var sheetIsPresented = false

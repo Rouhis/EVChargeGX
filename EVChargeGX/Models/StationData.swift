@@ -6,7 +6,7 @@
 //
 import Foundation
 
-
+/*
 struct StationData: Identifiable {
     let id = UUID()
     var name: String
@@ -15,3 +15,4 @@ struct StationData: Identifiable {
     var longitude: Double
 }
 
+*/
