@@ -45,7 +45,7 @@ struct FirstView: View {
                         Section(header: Text("Vehicle information")) {
                             TextField("Manufacturer", text: $manufacturer)
                             TextField("Model", text: $model)
-                            TextField("Battery capacity (kWh)", text: $capacity).keyboardType(.numberPad)
+                            TextField("Battery capacity(kWh)", text: $capacity).keyboardType(.numberPad)
                         }
                         
                         // Save whether the toggle is on or off in the UserDefaults here
