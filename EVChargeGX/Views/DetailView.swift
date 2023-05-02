@@ -18,7 +18,7 @@ struct StationDetailsView: View {
     let latitude: Double
     let longitude: Double
     let stationAddress: String = UserDefaults.standard.string(forKey: "stationAddress") ?? ""
-    let carBattery = UserDefaults.standard.string(forKey: "capacity")
+    @State private var carBattery = UserDefaults.standard.string(forKey: "capacity")
     @State private var hours: Double = 0.0
     @State private var totalMinutes = 0
     @State private var hoursString = ""
@@ -81,6 +81,9 @@ struct StationDetailsView: View {
                 Spacer()
                 
             }.onAppear {
+                if carBattery == nil {
+                    carBattery = UserDefaults.standard.string(forKey: "firstCapacity")
+                }
                 hours = (Double(carBattery ?? "") ?? 0.0 ) / chargerPower
                 totalMinutes = Int(hours * 60.0)
                 hoursString = "\(totalMinutes / 60)h"
