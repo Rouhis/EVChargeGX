@@ -11,7 +11,7 @@ import CoreLocation
 struct FirstView: View {
     @State private var locationManager = CLLocationManager()
     
-    // variables stored in Appstorage
+    // variables stored in UserDefaults
     @AppStorage("firstManufacturer") var manufacturer = ""
     @AppStorage("firstModel") var model = ""
     @AppStorage("firstCapacity") var capacity = ""
@@ -40,6 +40,7 @@ struct FirstView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                     
+                    // Vehicle information in textfields that gets sent to the UserDefaults
                     Form {
                         Section(header: Text("Vehicle information")) {
                             TextField("Manufacturer", text: $manufacturer)
@@ -47,12 +48,14 @@ struct FirstView: View {
                             TextField("Battery capacity (kWh)", text: $capacity).keyboardType(.numberPad)
                         }
                         
+                        // Save whether the toggle is on or off in the UserDefaults here
                         Section(header: Text("Preferred/Owned connector types")) {
                             Toggle("Type 2", isOn: $type2)
                             Toggle("CCS", isOn: $ccs)
                             Toggle("CHAdeMO", isOn: $chademo)
                         }
                     }
+                    // Clicking whereever in the form hides the keyboard
                     .onTapGesture {
                         hideKeyboard()
                     }
@@ -62,6 +65,7 @@ struct FirstView: View {
                     Spacer()
                     
                     VStack {
+                        // Navigate to the MapView and turn the firstTimeOpen variable to false so FirstView doesn't open again
                         NavigationLink(
                             destination: MapView(),
                             label: {
@@ -75,21 +79,23 @@ struct FirstView: View {
                                 print("Saved")
                                 firstTimeOpen = false
                             })
-                        .padding(.horizontal)
+                            .padding(.horizontal)
                         
-                        Button(action: {
-                            firstTimeOpen = false
-                            manufacturer = ""
-                            model = ""
-                            capacity = ""
-                        }, label: {
+                        // Navigate to the MapView and set the vehicle information to empty
+                        NavigationLink(destination: MapView(), label:{
                             Text("I will do this later")
                                 .font(.headline)
                                 .underline()
                                 .foregroundColor(.blue)
+                        }).simultaneousGesture(TapGesture().onEnded {
+                            firstTimeOpen = false
+                            manufacturer = ""
+                            model = ""
+                            capacity = ""
                         })
                         .padding(.vertical)
                         
+                        // Info bubble for additional information in an alert when pressed
                         Button(action: {
                             alert = true
                         }, label: {
@@ -105,6 +111,7 @@ struct FirstView: View {
                     .padding(.bottom)
                 }
                 .padding()
+                // Asks the user for permission to use location data
                 .onAppear {
                     locationManager.requestWhenInUseAuthorization()
                 }

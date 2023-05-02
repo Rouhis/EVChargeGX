@@ -195,25 +195,28 @@ struct MapView: View {
                                         Connections: item.Connections
                                         
                                     )
-                                    let test = item.Connections[0].ConnectionType?.Title ?? ""
-                                    if !test.isEmpty && filterByConnectors {
-                                        print(":DDD", test, type2, ccs, chademo)
-                                        if type2 && test.contains("Type 2") {
-                                            print(":lll", "Type 2 toimii", type2)
-                                            annotationItems.append(annotationItem)
-                                        } else if ccs && test.contains("CCS") {
-                                            print(":lll", "ccs toimii", ccs)
-                                            annotationItems.append(annotationItem)
-                                        } else if chademo && test.contains("CHAdeMO") {
-                                            print(":lll","chademo toimii", chademo)
-                                            annotationItems.append(annotationItem)
+                                    // Get the connector's title inside connections from the station object
+                                    // Return an empty string if there is no information about the connector title
+                                    if !item.Connections.isEmpty {
+                                        let test = item.Connections[0].ConnectionType?.Title ?? ""
+                                        // Check that the connector title is not empty and that the user has toggled on the filter by connectors in MapView
+                                        // If so, check what connectors the user owns and if the nearby stations use those connectos
+                                        // If the stations use owned connectors display only those stations on the map. If user owns none of the connectors and the filter option is on, no stations are displayed on the map
+                                        if !test.isEmpty && filterByConnectors {
+                                            if type2 && test.contains("Type 2") {
+                                                annotationItems.append(annotationItem)
+                                            } else if ccs && test.contains("CCS") {
+                                                annotationItems.append(annotationItem)
+                                            } else if chademo && test.contains("CHAdeMO") {
+                                                annotationItems.append(annotationItem)
+                                            }
+                                            // If the filter is turned off or there were no connector titles in any of the station objects show every station near the user regardless of connector type
                                         } else {
-                                            print(":ppp", "No stations with connectors")
+                                            annotationItems.append(annotationItem)
                                         }
                                     } else {
                                         annotationItems.append(annotationItem)
                                     }
-                                    print(item.AddressInfo.Title)
                                 }
                             }
                         }
@@ -279,25 +282,19 @@ struct MapView: View {
                                     address: item.AddressInfo.AddressLine1,
                                     Connections: item.Connections
                                 )
+                                // Same code that's on the .onChange function
                                 let test = item.Connections[0].ConnectionType?.Title ?? ""
                                 if !test.isEmpty && filterByConnectors {
-                                    print(":DDD", test, type2, ccs, chademo)
                                     if type2 && test.contains("Type 2") {
-                                        print(":lll", "Type 2 toimii", type2)
                                         annotationItems.append(annotationItem)
                                     } else if ccs && test.contains("CCS") {
-                                        print(":lll", "ccs toimii", ccs)
                                         annotationItems.append(annotationItem)
                                     } else if chademo && test.contains("CHAdeMO") {
-                                        print(":lll","chademo toimii", chademo)
                                         annotationItems.append(annotationItem)
-                                    } else {
-                                        print(":ppp", "No stations with connectors")
                                     }
                                 } else {
                                     annotationItems.append(annotationItem)
                                 }
-                                print(item.AddressInfo.Title)
                                 
                             }
                     }
