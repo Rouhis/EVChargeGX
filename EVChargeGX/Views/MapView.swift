@@ -1,7 +1,7 @@
 //  EVChargeGX
 //
 //  Created by iosdev on 3.4.2023.
-//
+//imports
 import MapKit
 import SwiftUI
 import Drawer
@@ -14,7 +14,7 @@ struct AnnotationItem: Identifiable {
     let address: String
     let Connections : [Connections]
 }
-
+//gets user location
 public func getUserLocation(manager: CLLocationManager) -> CLLocationCoordinate2D? {
      guard let userLocation = manager.location?.coordinate else {
          return nil
@@ -38,17 +38,16 @@ struct MapView: View {
     )
     @State private var alert = false
     @State private var annotationItems = [AnnotationItem]()
-    @AppStorage("stationName") var stationName: String = ""
-    @AppStorage("chargerType") var chargerType: String = ""
-    @AppStorage("chargerPower") var chargerPower: Double = 0
     @State private var sheetIsPresented = false
     @State private var stationLatitude: Double = 0
     @State private var stationLongitude: Double = 0
-    @AppStorage("stationAddress") var stationAddress: String = ""
-    
     @State private var speechTranscript = ""
     @State var heights = [CGFloat(110),CGFloat(600)]
-
+    //gets info from storage
+    @AppStorage("stationName") var stationName: String = ""
+    @AppStorage("chargerType") var chargerType: String = ""
+    @AppStorage("chargerPower") var chargerPower: Double = 0
+    @AppStorage("stationAddress") var stationAddress: String = ""
     @AppStorage("type2") var type2 = UserDefaults.standard.bool(forKey: "type2")
     @AppStorage("ccs") var ccs = UserDefaults.standard.bool(forKey: "ccs")
     @AppStorage("chademo") var chademo = UserDefaults.standard.bool(forKey: "chademo")
@@ -133,7 +132,7 @@ struct MapView: View {
                     MapAnnotation(coordinate: annotation.coordinate) {
                         
                         VStack {
-                            
+                            //annotation style
                             Image(systemName: "bolt.fill")
                                 .resizable()
                                 .foregroundColor(.white)
@@ -152,7 +151,6 @@ struct MapView: View {
                         .shadow(radius: 3)
                         
                         .onTapGesture {
-                            print(annotation.title)
                             //Here when the annotation is clicked we set values for the sheet
                             stationName = annotation.title
                             chargerType = annotation.Connections.first?.ConnectionType?.Title ?? ""
@@ -172,6 +170,7 @@ struct MapView: View {
                             StationDetailsView(latitude: stationLatitude,longitude: stationLongitude, region: $stationRegion, isPresented: $sheetIsPresented)
                         }
                         .onDisappear {
+                            // removes every annotation from the map when view changes
                             annotationItems.removeAll()
                         }
                     }
@@ -268,8 +267,10 @@ struct MapView: View {
             locationManager.distanceFilter = kCLDistanceFilterNone
             locationManager.startUpdatingLocation()
             if let userLocation = locationManager.location?.coordinate {
+                // takes user to the location
                 region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
                 
+                // calls api
                 callApi(latitude: userLocation.latitude, longitude: userLocation.longitude) { result, error in
                     if let error = error {
                         print("Error decoding JSON: \(error)")
