@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+// This view is used to only show the first view once
 struct StartView: View {
     
     let persistenceController = PersistenceController.shared

@@ -9,7 +9,7 @@ import SwiftUI
 
 import MapKit
 
-
+//This is the sheet that is shown when annotation or draweritem is clicked
 struct StationDetailsView: View {
     //These values are passed from mapview to here
     let stationName: String = UserDefaults.standard.string(forKey: "stationName") ?? ""
