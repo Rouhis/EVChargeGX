@@ -84,7 +84,7 @@ struct StationDetailsView: View {
                 Spacer()
                 
             }.onAppear {
-                //Calculations for the charge time
+                //Calculations for the charge time.
                 if carBattery == nil {
                     carBattery = UserDefaults.standard.string(forKey: "firstCapacity")
                 }
