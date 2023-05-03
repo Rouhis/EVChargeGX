@@ -6,4 +6,10 @@ The application has 3 views but the first view will only be shown once if the us
 
 First View
 
-![image](https://user-images.githubusercontent.com/103174848/235910358-0e446ecf-cc98-4973-b703-4d987f4853bf.png)
+<img width="257" alt="Screenshot 2023-05-03 at 15 03 21" src="https://user-images.githubusercontent.com/103174848/235910563-d28a0e04-ebd4-4f18-bf59-c594a81759b7.png">
+
+Main View
+
+
+
+Profile View
