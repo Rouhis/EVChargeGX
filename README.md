@@ -1,6 +1,6 @@
 # EVChargeGX
 
-EVChargeGX is a IOS application made by Eetu Rouhiainen, Tuomas Heikkilä, Leo Gong and Axel Kähkönen as a school project. EvChargeGX is a application that is used to find electric vechile charging station near the user.
+EVChargeGX is a IOS application made by Eetu Rouhiainen, Tuomas Heikkilä, Leo Gong and Axel Kähkönen as a school project. EvChargeGX is a application that is used to find electric vechile charging station near the user. The application is available in English and Finnish.
 
 The application has 3 views but the first view will only be shown only once if the user doesn't click the button that allows the view to be opened again. The data for the views comes from the Open charge map API.
 
