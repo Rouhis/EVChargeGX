@@ -10,6 +10,9 @@ First View
 
 Main View
 
-
+<img width="257" alt="Screenshot 2023-05-03 at 15 04 27" src="https://user-images.githubusercontent.com/103174848/235910861-c9970de3-d19c-4cd4-a6fb-ccfe0f88c967.png">
 
 Profile View
+
+<img width="257" alt="Screenshot 2023-05-03 at 15 04 33" src="https://user-images.githubusercontent.com/103174848/235910914-9fd1bf01-b974-482f-bac5-3e7fa468862e.png">
+
